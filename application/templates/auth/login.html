@@ -13,7 +13,7 @@
 
 <div>
   <div>
-    <legend>Sign in</legend>
+    <legend>Log in</legend>
     {% with errors = get_flashed_messages(category_filter=["error"]) %}
     {% if errors %}
     <div>
@@ -34,13 +34,9 @@
     </div>
     {% endif %}
     <form method="POST" accept-charset="UTF-8" role="form">
-        {{ form.csrf_token }}
-        {{ render_field(form.firstname, placeholder="First name", autofocus="") }}
-        {{ render_field(form.lastname, placeholder="Last name") }}
-        {{ render_field(form.email, placeholder="Email") }}
-        {{ render_field(form.password, placeholder="Password") }}
-        {{ render_field(form.confirm_password, placeholder="Confirm password") }}
-        {{ render_field(form.instruments, placeholder="Musical instruments") }}
+      {{ form.csrf_token }}
+      {{ render_field(form.email, placeholder="Email Address", autofocus="") }}
+      {{ render_field(form.password, placeholder="Password") }}
       <button type="submit" name="submit">Submit</button>
     </form>  
   </div>
