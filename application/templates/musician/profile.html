@@ -7,13 +7,15 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="profile-img">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt=""/>
+                    {% if musician.get_avatar() == None %}
+                        <img src="{{url_for('static', filename='img/avatar_default.png')}}" width="240" height="200" alt=""/>
+                    {% endif %}
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="profile-head">
                             <h5>
-                                Valera Gladiator
+                                {{musician.firstname}} {{musician.lastname}}
                             </h5>
                     <ul class="nav nav-tabs" id="myTab" role="tablist" style="margin-top: 4em;">
                         <li class="nav-item">
@@ -28,11 +30,11 @@
         </div>
         <div class="row">
             <div class="col-md-4">
-                <div class="profile-work">
+                <div class="profile-work" style="margin-top: 2em;">
                     <p>SOCIAL MEDIA</p>
-                    <a href="">Facebook</a><br/>
-                    <a href="">Spotify</a><br/>
-                    <a href="">SoundCloud</a>
+                    <a href="{{musician.facebook}}">Facebook</a><br/>
+                    <a href="{{musician.spotify}}">Spotify</a><br/>
+                    <a href="{{musician.soundcloud}}">SoundCloud</a>
                 </div>
             </div>
             <div class="col-md-8">
@@ -43,7 +45,7 @@
                                         <label>Name</label>
                                     </div>
                                     <div class="col-md-6">
-                                        <p>Valera Gladiator</p>
+                                        <p>{{musician.firstname}} {{musician.lastname}}</p>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -51,15 +53,7 @@
                                         <label>Email</label>
                                     </div>
                                     <div class="col-md-6">
-                                        <p>kshitighelani@gmail.com</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Phone</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>123 456 7890</p>
+                                        <p>{{musician.email}}</p>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -67,7 +61,7 @@
                                         <label>Musical instruments</label>
                                     </div>
                                     <div class="col-md-6">
-                                        <p>Guitar, drums</p>
+                                        <p>{{musician.instruments}}</p>
                                     </div>
                                 </div>
                     </div>

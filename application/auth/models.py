@@ -1,11 +1,11 @@
 from application import db
 
-class Base(db.Model):
+class User(db.Model):
     __abstract__  = True
     id = db.Column(db.Integer, primary_key=True)
     date_created = db.Column(db.DateTime,  default=db.func.current_timestamp())
     
-class Musician(Base):
+class Musician(User):
     __tablename__ = 'musicians'
 
     id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
@@ -17,6 +17,7 @@ class Musician(Base):
     facebook = db.Column(db.String(192), default=None)
     spotify = db.Column(db.String(192), default=None)
     soundcloud = db.Column(db.String(192), default=None)
+    avatar = db.Column(db.LargeBinary, default=None) 
 
     def __init__(self, firstname, lastname, email, password, instruments, facebook, spotify, soundcloud):
         self.firstname = firstname
@@ -28,9 +29,14 @@ class Musician(Base):
         self.spotify = spotify
         self.soundcloud = soundcloud
 
-
     def get_id(self):
         return self.id  
+    
+    def get_avatar(self):
+        return self.avatar
+
+    def set_avatar(self, avatar):
+        self.avatar = avatar
 
     def is_anonymous(self):
         return False
@@ -41,7 +47,13 @@ class Musician(Base):
     def is_active(self):
        return True
 
-class Band(Base):
+    def roles(self):
+        return ["MUSICIAN"]
+        
+    def has_roles(self, *args):
+        return set(args).issubset({role for role in self.roles()})
+
+class Band(User):
     __tablename__ = 'bands'
 
     id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
@@ -53,6 +65,7 @@ class Band(Base):
     facebook = db.Column(db.String(192), default=None)
     spotify = db.Column(db.String(192), default=None)
     soundcloud = db.Column(db.String(192), default=None)
+    avatar = db.Column(db.LargeBinary, default=None)
 
     def __init__(self, title, email, password, current_member_num, genres, facebook, spotify, soundcloud):
         self.title = title
@@ -67,6 +80,9 @@ class Band(Base):
     def get_id(self):
         return self.id  
 
+    def set_avatar(self, avatar):
+        self.avatar = avatar
+
     def is_anonymous(self):
         return False
 
@@ -75,3 +91,9 @@ class Band(Base):
 
     def is_active(self):
        return True
+
+    def roles(self):
+        return ["BAND"]
+
+    def has_roles(self, *args):
+        return set(args).issubset({role for role in self.roles()})

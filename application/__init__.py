@@ -15,8 +15,7 @@ login_manager = LoginManager(app)
 login_manager.blueprint_login_views = {  
     'musician':  "auth.musician_login",  
     'band': "auth.band_login",  
-} 
-#login_manager.login_view = 'login'
+}
 
 db = SQLAlchemy(app)
 
@@ -30,8 +29,8 @@ def not_found(error):
 
 
 from application.auth import controllers
+from application.notifications import controllers
 from application.auth.models import Band, Musician
-from application.musician import controllers
 
 @login_manager.user_loader
 def load_user(user_id):
