@@ -1,3 +1,7 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
 {% macro render_field(field, placeholder=None) %}
 {% if field.errors %}
 <div>
@@ -41,7 +45,12 @@
         {{ render_field(form.password, placeholder="Password") }}
         {{ render_field(form.confirm_password, placeholder="Confirm password") }}
         {{ render_field(form.instruments, placeholder="Musical instruments") }}
+        {{ render_field(form.facebook, placeholder="Facebook") }}
+        {{ render_field(form.spotify, placeholder="Spotify") }}
+        {{ render_field(form.soundcloud, placeholder="SoundCloud") }}
       <button type="submit" name="submit">Submit</button>
     </form>  
   </div>
 </div>
+
+{% endblock %}

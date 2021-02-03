@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, session
 from flask_sqlalchemy import SQLAlchemy
 from os import getenv
 from flask_wtf.csrf import CSRFProtect
@@ -11,9 +11,12 @@ csrf.init_app(app)
 app.config.from_object('config')
 app.secret_key = getenv("SECRET_KEY")
 
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = 'login'
+login_manager = LoginManager(app)
+login_manager.blueprint_login_views = {  
+    'musician':  "auth.musician_login",  
+    'band': "auth.band_login",  
+} 
+#login_manager.login_view = 'login'
 
 db = SQLAlchemy(app)
 
@@ -27,12 +30,17 @@ def not_found(error):
 
 
 from application.auth import controllers
-from application.auth.models import User
+from application.auth.models import Band, Musician
 from application.musician import controllers
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(user_id)
+    if session.get('band'):
+        return Band.query.get(int(user_id))
+    elif session.get('musician'):
+        return Musician.query.get(int(user_id))
+    else:
+        return None
 
 
 db.create_all()

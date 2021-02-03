@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 
 {% block content %}
+
 {% macro render_field(field, placeholder=None) %}
 {% if field.errors %}
 <div>
@@ -16,7 +17,7 @@
 
 <div>
   <div>
-    <legend>Log in</legend>
+    <legend>Sign in</legend>
     {% with errors = get_flashed_messages(category_filter=["error"]) %}
     {% if errors %}
     <div>
@@ -37,9 +38,16 @@
     </div>
     {% endif %}
     <form method="POST" accept-charset="UTF-8" role="form">
-      {{ form.csrf_token }}
-      {{ render_field(form.email, placeholder="Email Address", autofocus="") }}
-      {{ render_field(form.password, placeholder="Password") }}
+        {{ form.csrf_token }}
+        {{ render_field(form.title, placeholder="Title", autofocus="") }}
+        {{ render_field(form.email, placeholder="Email") }}
+        {{ render_field(form.password, placeholder="Password") }}
+        {{ render_field(form.confirm_password, placeholder="Confirm password") }}
+        {{ render_field(form.current_member_num, placeholder="Current number of members") }}
+        {{ render_field(form.genres, placeholder="Genres") }}
+        {{ render_field(form.facebook, placeholder="Facebook") }}
+        {{ render_field(form.spotify, placeholder="Spotify") }}
+        {{ render_field(form.soundcloud, placeholder="SoundCloud") }}
       <button type="submit" name="submit">Submit</button>
     </form>  
   </div>
