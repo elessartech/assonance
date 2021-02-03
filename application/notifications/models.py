@@ -11,15 +11,15 @@ class NotificationForMusician(Notification):
     id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
     title = db.Column(db.String(128),  nullable=False)
     description = db.Column(db.String(192), nullable=False)
-    instruments = db.Column(db.String(192), nullable=False)
+    instrument = db.Column(db.String(192), nullable=False)
     band_id = db.Column(db.Integer, nullable=False)
     cover_image = db.Column(db.LargeBinary, default=None) 
     likes = db.Column(db.Integer, nullable=False, default=0)
 
-    def __init__(self, title, description, instruments, band_id, cover_image):
+    def __init__(self, title, description, instrument, band_id, cover_image):
         self.title = title
         self.description = description
-        self.instruments = instruments
+        self.instrument = instrument
         self.band_id = band_id
         self.cover_image = cover_image
 
@@ -31,16 +31,16 @@ class NotificationForBand(Notification):
 
     id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
     title = db.Column(db.String(128),  nullable=False)
-    instruments = db.Column(db.String(192), nullable=False)
+    instrument = db.Column(db.String(192), nullable=False)
     description = db.Column(db.String(192), nullable=False)
     musician_id = db.Column(db.Integer, nullable=False)
     cover_image = db.Column(db.LargeBinary, default=None)
     likes = db.Column(db.Integer, nullable=False, default=0) 
 
-    def __init__(self, title, description, instruments, musician_id, cover_image):
+    def __init__(self, title, description, instrument, musician_id, cover_image):
         self.title = title
         self.description = description
-        self.instruments = instruments
+        self.instrument = instrument
         self.musician_id = musician_id
         self.cover_image = cover_image
 
