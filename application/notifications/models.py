@@ -5,52 +5,52 @@ class Notification(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date_created = db.Column(db.DateTime,  default=db.func.current_timestamp())
 
-class NotificationForMusician(Notification):
-    __tablename__ = 'notifications_for_musicians'
+class NotificationForFindingMusician(Notification):
+    __tablename__ = 'notifications_for_finding_musicians'
 
     id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
     title = db.Column(db.String(128),  nullable=False)
     description = db.Column(db.String(192), nullable=False)
-    favorite_genres = db.Column(db.String(192), nullable=False)
+    preferable_genres = db.Column(db.String(192), nullable=False)
     location = db.Column(db.String(192), nullable=False)
-    instrument = db.Column(db.String(192), nullable=False)
+    instruments = db.Column(db.String(192), nullable=False)
     band_id = db.Column(db.Integer, nullable=False)
     cover_image = db.Column(db.LargeBinary, default=None) 
+    rendered_cover_image = db.Column(db.Text, default=None)
     likes = db.Column(db.Integer, nullable=False, default=0)
 
-    def __init__(self, title, description, favorite_genres, location, instrument, band_id, cover_image):
+    def __init__(self, title, description, preferable_genres, location, instruments, band_id):
         self.title = title
         self.description = description
-        self.favorite_genres = favorite_genres
+        self.preferable_genres = preferable_genres
         self.location = location
-        self.instrument = instrument
+        self.instruments = instruments
         self.band_id = band_id
-        self.cover_image = cover_image
 
     def get_id(self):
         return self.id  
 
-class NotificationForBand(Notification):
-    __tablename__ = 'notifications_for_bands'
+class NotificationForFindingBand(Notification):
+    __tablename__ = 'notifications_for_finding_bands'
 
     id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
     title = db.Column(db.String(128),  nullable=False)
-    instrument = db.Column(db.String(192), nullable=False)
     description = db.Column(db.String(192), nullable=False)
-    favorite_genres = db.Column(db.String(192), nullable=False)
+    instruments = db.Column(db.String(192), nullable=False)
+    preferable_genres = db.Column(db.String(192), nullable=False)
     location = db.Column(db.String(192), nullable=False)
     musician_id = db.Column(db.Integer, nullable=False)
     cover_image = db.Column(db.LargeBinary, default=None)
+    rendered_cover_image = db.Column(db.Text, default=None)
     likes = db.Column(db.Integer, nullable=False, default=0) 
 
-    def __init__(self, title, description, favorite_genres, location, instrument, musician_id, cover_image):
+    def __init__(self, title, description, preferable_genres, location, instruments, musician_id):
         self.title = title
         self.description = description
-        self.favorite_genres = favorite_genres
+        self.preferable_genres = preferable_genres
         self.location = location
-        self.instrument = instrument
+        self.instruments = instruments
         self.musician_id = musician_id
-        self.cover_image = cover_image
 
     def get_id(self):
         return self.id  

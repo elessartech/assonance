@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+{% macro render_field(field, placeholder=None) %}
+{% set css_class = 'form-control ' + kwargs.pop('class', '') %}
+{{ field(class=css_class, placeholder=placeholder, **kwargs) }}
+{% endmacro %}
+
+<div style="width: 80%">
+    <div>
+    <legend>Create new notification</legend>
+    {{error}}
+    <form method="POST" accept-charset="UTF-8" role="form">
+    {{ form.csrf_token }}
+    {{ render_field(form.title, placeholder="Title") }}
+    {{ render_field(form.description, placeholder="Describe your notification") }}
+    {{ render_field(form.preferable_genres, placeholder="What genres do you play in?") }}
+    {{ render_field(form.location, placeholder="Where are situated at?") }}
+    {{ render_field(form.instruments, placeholder="What instruments do you want the musician to play?") }}
+    {% if current_user.has_roles("musician") %}
+        {{ render_field(form.musician_id, value=current_user.get_id()) }}
+    {% elif current_user.has_roles("band") %}
+        {{ render_field(form.band_id, value=current_user.get_id()) }}
+    {% endif %}
+    <button type="submit" name="submit">Submit</button>
+    </form>  
+    </div>
+</div>
+
+{% endblock %}

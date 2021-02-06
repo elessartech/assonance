@@ -39,6 +39,10 @@ def logout():
     logout_user()
     if session.get('musician'):
         del session['musician']
+    if session.get('band'):
+        del session['band']
+    if session.get('admin'):
+        del session['admin']
     return redirect(url_for("login"))
 
 @app.route("/signup-musician", methods=["GET", "POST"])

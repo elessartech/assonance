@@ -5,9 +5,15 @@
   <section class="notification-panel">
         <span class="notification-header-btns">
             {% if current_user.is_authenticated %}
-                <a href="#" class=" btn btn-dark btn-xs">My notifications</a>
+                {% if current_user.has_roles("musician") %}
+                    <a href="#" class=" btn btn-dark btn-xs">My notifications</a>
+                {% elif current_user.has_roles("band") %}
+                    <a href="#" class=" btn btn-dark btn-xs">My notifications</a>
+                {% endif %}
+                <a href="/notifications/new-notification" class=" btn btn-success btn-xs">Create new notification</a>
+            {% else %}
+                <span>One need to be authorized in order to create notifications...</span>
             {% endif %}
-            <a href="#" class=" btn btn-success btn-xs">Create new notification</a>
         </span>
         <div class="notification-search input-group">
             <input type="text" placeholder="Genres, band name, location..." class="input-sm form-control">
@@ -25,28 +31,30 @@
             </tr>
             </thead>
             <tbody>
+                {% for notification in notifications %}
                 <tr>
                     <td class="notification-name">
-                        <a href="project_details.html">Metal guitarist wanted!</a>
+                        <a href="project_details.html">{{notification.title}}</a>
                         <br>
-                        <small>Posted 27.11.2020</small>
+                        <small>Posted {{notification.date_created}}</small>
                     </td>
                     <td class="notification-instrument">
                         Metallica
                     </td>
                     <td class="notification-instrument">
-                        Guitar
+                        {{notification.instruments}}
                     </td>
                     <td class="notification-genres">
-                        Melodic death metal, Metalcore
+                        {{notification.preferable_genres}}
                     </td>
                     <td class="notification-locations">
-                        <span class="label label-primary">Helsinki, FI</span>
+                        <span class="label label-primary">{{notification.location}}</span>
                     </td>
                     <td class="notification-likes">
-                        3
+                        {{notification.likes}}
                     </td>
                 </tr>
+                {% endfor %}
             </tbody>
         </table>
     </section>
