@@ -6,6 +6,8 @@
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link href="{{url_for('static', filename='css/index.css')}}" rel="stylesheet">
     <title>Assonance</title>
 </head>
 <body>
@@ -32,14 +34,14 @@
                 <a class="nav-link" href="/notifications">Notifications</a>
               </li>
               {% if current_user.is_authenticated %}
-                {% if current_user.has_roles('MUSICIAN') %}
+                {% if current_user.has_roles('musician') %}
                   <li class="nav-item">
                     <a class="nav-link" href="/profile-musician/{{current_user.get_id()}}">Profile</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="/logout">Log Out</a>
                   </li>
-                {% elif current_user.has_roles('BAND') %}
+                {% elif current_user.has_roles('band') %}
                 <li class="nav-item">
                   <a class="nav-link" href="/profile-band/{{current_user.get_id()}}">Profile</a>
                 </li>
@@ -63,7 +65,7 @@
           </div>
         </div>
       </nav>
-    <main style="margin-top: 2em;">
+    <main style="margin: 2em auto; width: 80%;">
         {% block content %}
 
         {% endblock  %}

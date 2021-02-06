@@ -4,7 +4,7 @@ from flask_login.utils import login_required
 from application import db
 from application import app
 from application.auth.forms import LoginForm, BandSignupForm, MusicianSignupForm
-from application.auth.models import Band, Musician
+from application.auth.models import Band, Musician, Admin
 from application.util.security import encrypt_password, verify_password
 
 @app.route('/login', methods=["GET", "POST"])
@@ -12,15 +12,26 @@ def login():
     if request.method == "GET":
         return render_template("auth/login.html", form = LoginForm())
     form = LoginForm(request.form)
-    user = Musician.query.filter_by(email=form.email.data).first()
+
+    if form.role.data == "musician":
+        model = Musician
+        path_to_redir = "profile_musician"
+    elif form.role.data == "band":
+        model = Band
+        path_to_redir = "profile_band"
+    else:
+        model = Admin
+        path_to_redir = "profile_admin"
+    
+    user = model.query.filter_by(email=form.email.data).first()
     if not user:
         return render_template("auth/login.html", form = form, error = "Either email or password is incorrect")
 
     if not(verify_password(form.password.data, user.password)):
         return render_template("auth/login.html", form = form, error = "No such email or password.")
     login_user(user)
-    session['musician'] = True
-    return redirect(url_for("profile_musician", musician_id=user.id))
+    session[form.role.data] = True
+    return redirect(url_for(path_to_redir, id=user.id))
 
 @app.route('/logout', methods=["GET"])
 @login_required
@@ -63,7 +74,14 @@ def signup_band():
     db.session().commit()
     return redirect(url_for("login"))
 
-@app.route('/profile-musician/<musician_id>', methods=["GET"])
-def profile_musician(musician_id):
-    musician = Musician.query.get(musician_id)
+@app.route('/profile-musician/<id>', methods=["GET"])
+def profile_musician(id):
+    musician = Musician.query.get(id)
     return render_template("musician/profile.html", musician=musician) 
+
+
+@app.route('/profile-band/<id>', methods=["GET"])
+def profile_band(id):
+    band = Band.query.get(id)
+    return render_template("band/profile.html", band=band) 
+

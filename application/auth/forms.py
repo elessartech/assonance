@@ -1,9 +1,10 @@
 from flask_wtf import FlaskForm
 from wtforms import TextField, PasswordField
+from wtforms.fields.core import RadioField
 from wtforms.validators import Required, Email
 
 class LoginForm(FlaskForm):
-    party = TextField('Party', [])
+    role = RadioField('Role', choices=['musician', 'band', 'admin'], default='musician', validators=[Required()])
     email = TextField('Email Address', [Email(), Required(message='Incorrect email')])
     password = PasswordField('Password', [Required(message='Password must be provided.')])
 

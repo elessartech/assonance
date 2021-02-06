@@ -48,7 +48,7 @@ class Musician(User):
        return True
 
     def roles(self):
-        return ["MUSICIAN"]
+        return ["musician"]
         
     def has_roles(self, *args):
         return set(args).issubset({role for role in self.roles()})
@@ -79,6 +79,9 @@ class Band(User):
 
     def get_id(self):
         return self.id  
+    
+    def get_avatar(self):
+        return self.avatar
 
     def set_avatar(self, avatar):
         self.avatar = avatar
@@ -93,7 +96,35 @@ class Band(User):
        return True
 
     def roles(self):
-        return ["BAND"]
+        return ["band"]
+
+    def has_roles(self, *args):
+        return set(args).issubset({role for role in self.roles()})
+
+class Admin(User):
+    __tablename__ = 'admins'
+    id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
+    name = db.Column(db.String(128),  nullable=False)
+    email = db.Column(db.String(128),  nullable=False, unique=True)
+    password = db.Column(db.String(192),  nullable=False)
+
+    def get_id(self):
+        return self.id  
+
+    def set_avatar(self, avatar):
+        self.avatar = avatar
+
+    def is_anonymous(self):
+        return False
+
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+       return True
+
+    def roles(self):
+        return ["admin"]
 
     def has_roles(self, *args):
         return set(args).issubset({role for role in self.roles()})

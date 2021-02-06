@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<section class="profile-section">
+    <header class="profile-header">
+        <h2>{{band.title}}</h2>
+        {% if band.get_avatar() == None %}
+            <div class="profile-avatar">
+                <img src="{{url_for('static', filename='img/avatar_default.png')}}" width="240" height="200" alt=""/>
+            </div>
+        {% endif %}
+        <h4>Band</h4>
+        <span>Member since: {{band.date_created}}</span>
+    </header>
+
+    <section class="profile-info-section">
+        <h2>About</h2>
+        <div class="profile-info">
+            <div class="profile-user-info">
+                    <div class="profile-user-details clearfix">
+                        <div class="profile-user-details-label">
+                            Title
+                        </div>
+                        <div class="profile-user-details-value">
+                            {{band.title}}
+                        </div>
+                    </div>
+                    <div class="profile-user-details clearfix">
+                        <div class="profile-user-details-label">
+                            Email
+                        </div>
+                        <div class="profile-user-details-value">
+                            {{band.email}}
+                        </div>
+                    </div>
+                    <div class="profile-user-details clearfix">
+                        <div class="profile-user-details-label">
+                            Musicians
+                        </div>
+                        <div class="profile-user-details-value">
+                            {{band.current_member_num}}
+                        </div>
+                    </div>
+                    <div class="profile-user-details clearfix">
+                        <div class="profile-user-details-label">
+                            Genres
+                        </div>
+                        <div class="profile-user-details-value">
+                            {{band.genres}}
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-social">
+                    <ul>
+                        <li><a href="#">{{band.facebook}} Test</a></li>
+                        <li><a href="#">{{band.spotify}} Test2</a></li>
+                        <li><a href="#">{{band.soundcloud}} Test3</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+
+{% endblock %}

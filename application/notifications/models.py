@@ -11,14 +11,18 @@ class NotificationForMusician(Notification):
     id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
     title = db.Column(db.String(128),  nullable=False)
     description = db.Column(db.String(192), nullable=False)
+    favorite_genres = db.Column(db.String(192), nullable=False)
+    location = db.Column(db.String(192), nullable=False)
     instrument = db.Column(db.String(192), nullable=False)
     band_id = db.Column(db.Integer, nullable=False)
     cover_image = db.Column(db.LargeBinary, default=None) 
     likes = db.Column(db.Integer, nullable=False, default=0)
 
-    def __init__(self, title, description, instrument, band_id, cover_image):
+    def __init__(self, title, description, favorite_genres, location, instrument, band_id, cover_image):
         self.title = title
         self.description = description
+        self.favorite_genres = favorite_genres
+        self.location = location
         self.instrument = instrument
         self.band_id = band_id
         self.cover_image = cover_image
@@ -33,13 +37,17 @@ class NotificationForBand(Notification):
     title = db.Column(db.String(128),  nullable=False)
     instrument = db.Column(db.String(192), nullable=False)
     description = db.Column(db.String(192), nullable=False)
+    favorite_genres = db.Column(db.String(192), nullable=False)
+    location = db.Column(db.String(192), nullable=False)
     musician_id = db.Column(db.Integer, nullable=False)
     cover_image = db.Column(db.LargeBinary, default=None)
     likes = db.Column(db.Integer, nullable=False, default=0) 
 
-    def __init__(self, title, description, instrument, musician_id, cover_image):
+    def __init__(self, title, description, favorite_genres, location, instrument, musician_id, cover_image):
         self.title = title
         self.description = description
+        self.favorite_genres = favorite_genres
+        self.location = location
         self.instrument = instrument
         self.musician_id = musician_id
         self.cover_image = cover_image

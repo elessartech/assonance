@@ -2,121 +2,65 @@
 
 {% block content %}
 
-<div class="container emp-profile">
-    <form method="post">
-        <div class="row">
-            <div class="col-md-4">
-                <div class="profile-img">
-                    {% if musician.get_avatar() == None %}
-                        <img src="{{url_for('static', filename='img/avatar_default.png')}}" width="240" height="200" alt=""/>
-                    {% endif %}
-                </div>
+<section class="profile-section">
+    <header class="profile-header">
+        <h2>{{musician.firstname}} {{musician.lastname}}</h2>
+        {% if musician.get_avatar() == None %}
+            <div class="profile-avatar">
+                <img src="{{url_for('static', filename='img/avatar_default.png')}}" width="240" height="200" alt=""/>
             </div>
-            <div class="col-md-6">
-                <div class="profile-head">
-                            <h5>
-                                {{musician.firstname}} {{musician.lastname}}
-                            </h5>
-                    <ul class="nav nav-tabs" id="myTab" role="tablist" style="margin-top: 4em;">
-                        <li class="nav-item">
-                            <a class="nav-link active" id="home-tab" data-toggle="tab" role="tab" aria-controls="home" aria-selected="true">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" id="profile-tab" data-toggle="tab" role="tab" aria-controls="profile" aria-selected="false">Notifications</a>
-                        </li>
+        {% endif %}
+        <h4>Musician</h4>
+        <span>Member since: {{musician.date_created}}</span>
+    </header>
+
+    <section class="profile-info-section">
+        <h2>About</h2>
+        <div class="profile-info">
+            <div class="profile-user-info">
+                    <div class="profile-user-details clearfix">
+                        <div class="profile-user-details-label">
+                            First Name
+                        </div>
+                        <div class="profile-user-details-value">
+                            {{musician.firstname}}
+                        </div>
+                    </div>
+                    <div class="profile-user-details clearfix">
+                        <div class="profile-user-details-label">
+                            Last Name
+                        </div>
+                        <div class="profile-user-details-value">
+                            {{musician.lastname}}
+                        </div>
+                    </div>
+                    <div class="profile-user-details clearfix">
+                        <div class="profile-user-details-label">
+                            Email
+                        </div>
+                        <div class="profile-user-details-value">
+                            {{musician.email}}
+                        </div>
+                    </div>
+                    <div class="profile-user-details clearfix">
+                        <div class="profile-user-details-label">
+                            Instruments
+                        </div>
+                        <div class="profile-user-details-value">
+                            {{musician.instruments}}
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-social">
+                    <ul>
+                        <li><a href="#">{{musician.facebook}} Test</a></li>
+                        <li><a href="#">{{musician.spotify}} Test2</a></li>
+                        <li><a href="#">{{musician.soundcloud}} Test3</a></li>
                     </ul>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="profile-work" style="margin-top: 2em;">
-                    <p>SOCIAL MEDIA</p>
-                    <a href="{{musician.facebook}}">Facebook</a><br/>
-                    <a href="{{musician.spotify}}">Spotify</a><br/>
-                    <a href="{{musician.soundcloud}}">SoundCloud</a>
-                </div>
-            </div>
-            <div class="col-md-8">
-                <div class="tab-content profile-tab" id="myTabContent">
-                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Name</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>{{musician.firstname}} {{musician.lastname}}</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Email</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>{{musician.email}}</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Musical instruments</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>{{musician.instruments}}</p>
-                                    </div>
-                                </div>
-                    </div>
-                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Experience</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>Expert</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Hourly Rate</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>10$/hr</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Total Projects</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>230</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>English Level</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>Expert</p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label>Availability</label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>6 months</p>
-                                    </div>
-                                </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label>Your Bio</label><br/>
-                                <p>Your detail description</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>           
-</div>
+    </section>
+</section>
 
 {% endblock %}
