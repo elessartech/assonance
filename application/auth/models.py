@@ -82,6 +82,7 @@ class Band(User):
 
 class Admin(User):
     __tablename__ = 'admins'
+    
     id = db.Column(db.Integer, primary_key=True, nullable=False, autoincrement=True)
     name = db.Column(db.String(128),  nullable=False)
     email = db.Column(db.String(128),  nullable=False, unique=True)

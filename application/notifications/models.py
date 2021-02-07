@@ -1,12 +1,10 @@
 from application import db
+from sqlalchemy.sql import text
 
 class NotificationBase(db.Model):
     __abstract__  = True
     id = db.Column(db.Integer, primary_key=True)
     date_created = db.Column(db.DateTime,  default=db.func.current_timestamp())
-
-    def get_id(self):
-        return self.id
 
 class Notification(NotificationBase):
     __tablename__ = 'notifications'
@@ -30,3 +28,13 @@ class Notification(NotificationBase):
         self.instruments = instruments
         self.publisher_id = publisher_id
         self.posted_by = posted_by
+
+    def get_id(self):
+        return self.id
+
+def get_all_notifications():
+    result = db.engine.execute('SELECT n.id, n.title, n.date_created, n.preferable_genres, n.location, n.instruments, n.posted_by, m.firstname || " " || m.lastname, b.title AS band_title, n.likes'
+                            ' FROM notifications AS n'
+                            ' LEFT JOIN musicians AS m ON m.id=n.publisher_id'
+                            ' LEFT JOIN bands AS b ON b.id=n.publisher_id;')
+    return result.fetchall()

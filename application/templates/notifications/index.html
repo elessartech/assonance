@@ -32,28 +32,36 @@
             </thead>
             <tbody>
                 {% for notification in notifications %}
-                <tr>
-                    <td class="notification-name">
-                        <a href="project_details.html">{{notification.title}}</a>
-                        <br>
-                        <small>Posted {{notification.date_created}}</small>
-                    </td>
-                    <td class="notification-instrument">
-                        Metallica
-                    </td>
-                    <td class="notification-instrument">
-                        {{notification.instruments}}
-                    </td>
-                    <td class="notification-genres">
-                        {{notification.preferable_genres}}
-                    </td>
-                    <td class="notification-locations">
-                        <span class="label label-primary">{{notification.location}}</span>
-                    </td>
-                    <td class="notification-likes">
-                        {{notification.likes}}
-                    </td>
-                </tr>
+                    {% if notification.posted_by == "musician" %}
+                        <tr class="bg-light">
+                    {% elif notification.posted_by == "band" %}
+                        <tr class="bg-dark" style="color: white;">
+                    {% endif %}
+                            <td class="notification-name">
+                                <a href="/notification/{{notification.id}}">{{notification.title}}</a>
+                                <br>
+                                <small>Posted {{notification.date_created}}</small>
+                            </td>
+                            <td class="notification-instrument">
+                                {% if notification.posted_by == "musician" %}
+                                    {{notification[-3]}}
+                                {% elif notification.posted_by == "band" %}
+                                    {{notification[-2]}}
+                                {% endif %}
+                            </td>
+                            <td class="notification-instrument">
+                                {{notification.instruments}}
+                            </td>
+                            <td class="notification-genres">
+                                {{notification.preferable_genres}}
+                            </td>
+                            <td class="notification-locations">
+                                <span class="label label-primary">{{notification.location}}</span>
+                            </td>
+                            <td class="notification-likes">
+                                {{notification.likes}}
+                            </td>
+                        </tr>
                 {% endfor %}
             </tbody>
         </table>

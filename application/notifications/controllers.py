@@ -2,11 +2,11 @@ from flask import request, render_template, session, redirect, url_for
 from application import app
 from application import db
 from application.notifications.forms import NewNotification
-from application.notifications.models import Notification
+from application.notifications.models import Notification, get_all_notifications
 
 @app.route('/notifications', methods=["GET"])
 def notifications():
-    notifications_to_show = Notification.query.all()
+    notifications_to_show = get_all_notifications()
     return render_template("notifications/index.html", notifications=notifications_to_show) 
 
 @app.route('/notifications/new-notification',  methods=["GET", "POST"])
