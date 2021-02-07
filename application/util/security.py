@@ -1,6 +1,6 @@
 from passlib.context import CryptContext
 from base64 import b64encode
-import base64
+from random import randint
 
 pwd_context = CryptContext(
         schemes=["pbkdf2_sha256"],
@@ -15,5 +15,10 @@ def verify_password(password, hashed_password):
     return pwd_context.verify(password, hashed_password)
 
 def render_picture(data):
-    render_pic = base64.b64encode(data).decode('ascii') 
+    render_pic = b64encode(data).decode('ascii') 
     return render_pic
+
+def random_num_with_n_digits(n):
+    range_start = 10**(n-1)
+    range_end = (10**n)-1
+    return randint(range_start, range_end)

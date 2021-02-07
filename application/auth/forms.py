@@ -8,7 +8,6 @@ class LoginForm(FlaskForm):
     email = TextField('Email Address', [Email(), Required(message='Incorrect email')])
     password = PasswordField('Password', [Required(message='Password must be provided.')])
 
-
 class MusicianSignupForm(FlaskForm):
     firstname = TextField('First name', [Required(message='Please, provide your first name')])
     lastname = TextField('Last name', [Required(message='Please, provide your last name')])

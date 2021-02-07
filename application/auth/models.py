@@ -4,6 +4,27 @@ class User(db.Model):
     __abstract__  = True
     id = db.Column(db.Integer, primary_key=True)
     date_created = db.Column(db.DateTime,  default=db.func.current_timestamp())
+
+    def get_id(self):
+        return self.id  
+    
+    def get_avatar(self):
+        return self.avatar
+
+    def set_avatar(self, avatar):
+        self.avatar = avatar
+
+    def is_anonymous(self):
+        return False
+
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+       return True
+
+    def has_roles(self, *args):
+        return set(args).issubset({role for role in self.roles()})
     
 class Musician(User):
     __tablename__ = 'musicians'
@@ -29,29 +50,8 @@ class Musician(User):
         self.spotify = spotify
         self.soundcloud = soundcloud
 
-    def get_id(self):
-        return self.id  
-    
-    def get_avatar(self):
-        return self.avatar
-
-    def set_avatar(self, avatar):
-        self.avatar = avatar
-
-    def is_anonymous(self):
-        return False
-
-    def is_authenticated(self):
-        return True
-
-    def is_active(self):
-       return True
-
     def roles(self):
         return ["musician"]
-        
-    def has_roles(self, *args):
-        return set(args).issubset({role for role in self.roles()})
 
 class Band(User):
     __tablename__ = 'bands'
@@ -77,29 +77,8 @@ class Band(User):
         self.spotify = spotify
         self.soundcloud = soundcloud
 
-    def get_id(self):
-        return self.id  
-    
-    def get_avatar(self):
-        return self.avatar
-
-    def set_avatar(self, avatar):
-        self.avatar = avatar
-
-    def is_anonymous(self):
-        return False
-
-    def is_authenticated(self):
-        return True
-
-    def is_active(self):
-       return True
-
     def roles(self):
         return ["band"]
-
-    def has_roles(self, *args):
-        return set(args).issubset({role for role in self.roles()})
 
 class Admin(User):
     __tablename__ = 'admins'
@@ -108,23 +87,5 @@ class Admin(User):
     email = db.Column(db.String(128),  nullable=False, unique=True)
     password = db.Column(db.String(192),  nullable=False)
 
-    def get_id(self):
-        return self.id  
-
-    def set_avatar(self, avatar):
-        self.avatar = avatar
-
-    def is_anonymous(self):
-        return False
-
-    def is_authenticated(self):
-        return True
-
-    def is_active(self):
-       return True
-
     def roles(self):
         return ["admin"]
-
-    def has_roles(self, *args):
-        return set(args).issubset({role for role in self.roles()})

@@ -17,12 +17,12 @@
     {{ render_field(form.description, placeholder="Describe your notification") }}
     {{ render_field(form.preferable_genres, placeholder="What genres do you play in?") }}
     {{ render_field(form.location, placeholder="Where are situated at?") }}
-    {{ render_field(form.instruments, placeholder="What instruments do you want the musician to play?") }}
     {% if current_user.has_roles("musician") %}
-        {{ render_field(form.musician_id, value=current_user.get_id()) }}
+        {{ render_field(form.instruments, placeholder="What instruments do you play?") }}
     {% elif current_user.has_roles("band") %}
-        {{ render_field(form.band_id, value=current_user.get_id()) }}
+        {{ render_field(form.instruments, placeholder="What instruments do you want the musician to play?") }}
     {% endif %}
+    {{ render_field(form.publisher_id, value=current_user.get_id()) }}
     <button type="submit" name="submit">Submit</button>
     </form>  
     </div>
