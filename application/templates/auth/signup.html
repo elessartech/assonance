@@ -6,19 +6,17 @@
     {{ field(class=css_class, placeholder=placeholder, **kwargs) }}
 {% endmacro %}
 
-<div>
+<div style="width: 80%">
   <div>
+    <legend>Sign up</legend>
+    {{error}}
     <form method="POST" accept-charset="UTF-8" role="form">
         {{ form.csrf_token }}
-        {{ render_field(form.title, placeholder="Title", autofocus="") }}
+        {{ render_field(form.role, class_="uk-input") }}
+        {{ render_field(form.name, placeholder="Name", autofocus="") }}
         {{ render_field(form.email, placeholder="Email") }}
         {{ render_field(form.password, placeholder="Password") }}
         {{ render_field(form.confirm_password, placeholder="Confirm password") }}
-        {{ render_field(form.current_member_num, placeholder="Current number of members") }}
-        {{ render_field(form.genres, placeholder="Genres") }}
-        {{ render_field(form.facebook, placeholder="Facebook") }}
-        {{ render_field(form.spotify, placeholder="Spotify") }}
-        {{ render_field(form.soundcloud, placeholder="SoundCloud") }}
       <button type="submit" name="submit">Submit</button>
     </form>  
   </div>

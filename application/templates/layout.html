@@ -34,31 +34,18 @@
                 <a class="nav-link" href="/notifications">Notifications</a>
               </li>
               {% if current_user.is_authenticated %}
-                {% if current_user.has_roles('musician') %}
                   <li class="nav-item">
-                    <a class="nav-link" href="/profile-musician/{{current_user.get_id()}}">Profile</a>
+                    <a class="nav-link" href="/user/profile/{{current_user.get_id()}}">Profile</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="/logout">Log Out</a>
                   </li>
-                {% elif current_user.has_roles('band') %}
-                <li class="nav-item">
-                  <a class="nav-link" href="/profile-band/{{current_user.get_id()}}">Profile</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/logout">Log Out</a>
-                </li>
-                {% endif %}
-              {% endif %}
-              {% if not current_user.is_authenticated %}
+              {% else %}
                 <li class="nav-item">
                   <a class="nav-link" href="/login">Log in</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/signup-musician">Sign up as a musician</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/signup-band">Sign up as a band</a>
+                  <a class="nav-link" href="/signup">Sign up</a>
                 </li>
               {% endif %}
             </ul>
