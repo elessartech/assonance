@@ -32,9 +32,9 @@
             </thead>
             <tbody>
                 {% for notification in notifications %}
-                    {% if notification.posted_by == "musician" %}
+                    {% if notification.publisher_role == "musician" %}
                         <tr class="bg-light">
-                    {% elif notification.posted_by == "band" %}
+                    {% elif notification.publisher_role == "band" %}
                         <tr class="bg-dark" style="color: white;">
                     {% endif %}
                             <td class="notification-name">
@@ -42,21 +42,21 @@
                                 <br>
                                 <small>Posted {{notification.date_created}}</small>
                             </td>
-                            <td class="notification-instrument">
-                                {% if notification.posted_by == "musician" %}
-                                    {{notification[-3]}}
-                                {% elif notification.posted_by == "band" %}
-                                    {{notification[-2]}}
-                                {% endif %}
+                            <td class="notification-publisher">
+                                {{ notification.publisher_name }}
                             </td>
                             <td class="notification-instrument">
-                                {{notification.instruments}}
+                                {% for instrument in notification.instruments %}
+                                    {{ instrument }}
+                                {% endfor %}
                             </td>
                             <td class="notification-genres">
-                                {{notification.preferable_genres}}
+                                {% for genre in notification.genres %}
+                                    {{ genre }}
+                                {% endfor %}
                             </td>
-                            <td class="notification-locations">
-                                <span class="label label-primary">{{notification.location}}</span>
+                            <td class="notification-location">
+                                <span class="label label-primary">{{notification.country}}</span>
                             </td>
                             <td class="notification-likes">
                                 {{notification.likes}}

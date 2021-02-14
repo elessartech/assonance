@@ -12,8 +12,7 @@ def login():
     if request.method == "GET":
         return render_template("auth/login.html", form = LoginForm())
     form = LoginForm(request.form)
-    model = User
-    user = model.query.filter_by(email=form.email.data).first()
+    user = User.query.filter_by(email=form.email.data).first()
     if not user:
         return render_template("auth/login.html", form = form, error = "No such email or password.")
     if not(verify_password(form.password.data, user.password)):
@@ -42,10 +41,12 @@ def signup_band():
     form = SignupForm(request.form)
     users = User.query.all()
     emails_of_users = [user.email for user in users]
+    if form.password.data != form.confirm_password.data:
+         return render_template("auth/signup.html", form = form, error = "Passwords do not match!")
     if form.email.data in emails_of_users:
-        return render_template("auth/signup.html", form = form, id_error = "This user has already signed up.")
+        return render_template("auth/signup.html", form = form, error = "This user has already signed up!")
     if not form.validate():
-        return render_template("auth/signup.html", form = form)
+        return render_template("auth/signup.html", form = form, error="Something went wrong. Try again, please!")
     new_user = User(form.name.data, form.email.data, form.role.data, encrypt_password(form.password.data))
     db.session().add(new_user)
     db.session().commit()

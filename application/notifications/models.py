@@ -25,22 +25,22 @@ class Notification(Base):
 class Instrument(Base):
     __tablename__ = 'instruments'
 
-    name = db.Column(db.String(128),  nullable=False)
+    names = db.Column(db.ARRAY(db.String(128)), nullable = False)
     notification_id = db.Column(db.Integer, db.ForeignKey('notifications.id'), nullable=False)
 
-    def __init__(self, name, notification_id):
-        self.name = name
+    def __init__(self, names, notification_id):
+        self.names = names
         self.notification_id = notification_id
 
 
 class Genre(Base):
     __tablename__ = 'genres'
 
-    name = db.Column(db.String(128),  nullable=False)
+    names = db.Column(db.ARRAY(db.String(128)), nullable = False)
     notification_id = db.Column(db.Integer, db.ForeignKey('notifications.id'), nullable=False)
 
-    def __init__(self, name, notification_id):
-        self.name = name
+    def __init__(self, names, notification_id):
+        self.names = names
         self.notification_id = notification_id
 
 class Location(Base):
@@ -54,11 +54,20 @@ class Location(Base):
         self.notification_id = notification_id
 
 
-def get_num_of_all_notifs():
-    result = db.engine.execute('SELECT COUNT(*) FROM notifications')
-    return result.fetchall()[0][0]
+def get_highest_notif_id():
+    result = db.engine.execute('SELECT id FROM notifications ORDER BY id DESC LIMIT 1;')
+    return result.fetchone()[0]
+
+def get_num_of_notifs():
+    result = db.engine.execute('SELECT COUNT(*) FROM notifications;')
+    return result.fetchone()[0]
 
 def get_all_notifications():
-    result = db.engine.execute('SELECT * FROM notifications;')
-    
+    result = db.engine.execute(
+    f'SELECT n.id, n.title, n.description, n.likes, n.date_created as date_created, u.name as publisher_name, u.role as publisher_role, g.names as genres, i.names as instruments, '
+    f'l.country as country FROM notifications n '
+    f'LEFT JOIN users u ON u.id = n.publisher_id '
+    f'LEFT JOIN genres g ON g.notification_id = n.id '
+    f'LEFT JOIN instruments i ON i.notification_id = n.id '
+    f'LEFT JOIN locations l ON l.notification_id = n.id;')
     return result.fetchall()

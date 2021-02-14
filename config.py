@@ -1,11 +1,9 @@
-import os
+from os import getenv
 
 DEBUG = True
 
-BASE_DIR = os.path.abspath(os.path.dirname(__file__))  
-
-SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'app.db')
-
+SQLALCHEMY_DATABASE_URI = getenv("DATABASE_URL")
+ 
 SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 DATABASE_CONNECT_OPTIONS = {}
