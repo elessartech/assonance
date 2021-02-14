@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<section class="notification-section">
+    <h2>{{notification.title}}</h2>
+    <small>Posted by {{notification.publisher_name}} on {{notification.date_created}}</small>
+
+    <p>{{notification.description}}</p>
+
+    <p>Genres: {% for genre in notification.genres %} {{genre}} {% endfor %}</p>
+    <p>Instruments wanted: {% for instrument in notification.instruments %} {{instrument}} {% endfor %}</p>
+    <p>Location: {{notification.country}}</p>
+
+    <a href="#" class=" btn btn-dark btn-xs">Apply</a>
+
+</section>
+{% endblock %}

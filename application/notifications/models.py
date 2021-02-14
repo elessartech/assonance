@@ -11,7 +11,6 @@ class Notification(Base):
     title = db.Column(db.String(128),  nullable=False)
     description = db.Column(db.String(192), nullable=False)
     publisher_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    likes = db.Column(db.Integer, nullable=False, default=0)
 
     def __init__(self, title, description, publisher_id):
         self.title = title
@@ -20,7 +19,6 @@ class Notification(Base):
 
     def get_id(self):
         return self.id
-
 
 class Instrument(Base):
     __tablename__ = 'instruments'
@@ -31,7 +29,6 @@ class Instrument(Base):
     def __init__(self, names, notification_id):
         self.names = names
         self.notification_id = notification_id
-
 
 class Genre(Base):
     __tablename__ = 'genres'
@@ -53,7 +50,6 @@ class Location(Base):
         self.country = country
         self.notification_id = notification_id
 
-
 def get_highest_notif_id():
     result = db.engine.execute('SELECT id FROM notifications ORDER BY id DESC LIMIT 1;')
     return result.fetchone()[0]
@@ -71,3 +67,25 @@ def get_all_notifications():
     f'LEFT JOIN instruments i ON i.notification_id = n.id '
     f'LEFT JOIN locations l ON l.notification_id = n.id;')
     return result.fetchall()
+
+def get_notifications_by_user_id(id):
+    result = db.engine.execute(
+    f'SELECT n.id, n.title, n.description, n.likes, n.date_created as date_created, u.name as publisher_name, u.role as publisher_role, g.names as genres, i.names as instruments, '
+    f'l.country as country FROM notifications n '
+    f'LEFT JOIN users u ON u.id = n.publisher_id '
+    f'LEFT JOIN genres g ON g.notification_id = n.id '
+    f'LEFT JOIN instruments i ON i.notification_id = n.id '
+    f'LEFT JOIN locations l ON l.notification_id = n.id '
+    f'WHERE n.publisher_id={id};')
+    return result.fetchall()
+
+def get_notification_by_notification_id(id):
+    result = db.engine.execute(
+    f'SELECT n.id, n.title, n.description, n.likes, n.date_created as date_created, u.name as publisher_name, u.role as publisher_role, g.names as genres, i.names as instruments, '
+    f'l.country as country FROM notifications n '
+    f'LEFT JOIN users u ON u.id = n.publisher_id '
+    f'LEFT JOIN genres g ON g.notification_id = n.id '
+    f'LEFT JOIN instruments i ON i.notification_id = n.id '
+    f'LEFT JOIN locations l ON l.notification_id = n.id '
+    f'WHERE n.id={id};')
+    return result.fetchone()

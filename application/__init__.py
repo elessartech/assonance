@@ -1,15 +1,15 @@
 from flask import Flask, render_template, session
 from flask_sqlalchemy import SQLAlchemy
-from os import getenv
 from flask_wtf.csrf import CSRFProtect
 from flask_login import LoginManager
+import os
+
 csrf = CSRFProtect()
 
 app = Flask(__name__)
 csrf.init_app(app)
 
 app.config.from_object('config')
-app.secret_key = getenv("SECRET_KEY")
 
 login_manager = LoginManager(app)
 

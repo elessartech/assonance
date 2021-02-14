@@ -5,16 +5,12 @@
   <section class="notification-panel">
         <span class="notification-header-btns">
             {% if current_user.is_authenticated %}
-                <a href="/my-notifications/{{current_user.get_id()}}" class=" btn btn-dark btn-xs">My notifications</a>
-                <a href="/new-notification" class=" btn btn-success btn-xs">Create new notification</a>
+                <a href="/notifications/my-notifications" class=" btn btn-dark btn-xs">My notifications</a>
+                <a href="/notifications/new-notification" class=" btn btn-success btn-xs">Create new notification</a>
             {% else %}
                 <span>One needs to be authorized in order to create notifications...</span>
             {% endif %}
         </span>
-        <div class="notification-search input-group">
-            <input type="text" placeholder="Genres, band name, location..." class="input-sm form-control">
-            <span class="notification-search-btn input-group-btn"><button type="button" class="btn btn-sm btn-info">Search</button> </span>
-        </div>
         <table class="table table-hover p-table">
             <thead>
             <tr>
@@ -23,6 +19,7 @@
                 <th>Instrument</th>
                 <th>Genres</th>
                 <th>Location</th>
+                <th>Likes</th>
             </tr>
             </thead>
             <tbody>
@@ -52,6 +49,9 @@
                             </td>
                             <td class="notification-location">
                                 <span class="label label-primary">{{notification.country}}</span>
+                            </td>
+                            <td class="notification-likes">
+                                {{notification.likes}}
                             </td>
                         </tr>
                 {% endfor %}
