@@ -1,6 +1,7 @@
 from flask import request, render_template, session, redirect, url_for
 from flask_login import login_user, logout_user
 from flask_login.utils import login_required
+from flask_wtf.csrf import CSRFProtect
 from application import db
 from application import app
 from application.auth.forms import LoginForm, SignupForm
@@ -52,6 +53,10 @@ def signup_band():
     db.session().commit()
     return redirect(url_for("login"))
 
+@app.route("/register-admin", methods=["GET", "POST"])
+def register_admin():
+    print(request)
+    return request.data
 
 @app.route('/user/profile/<id>', methods=["GET"])
 def user_profile(id):
