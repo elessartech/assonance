@@ -1,9 +1,5 @@
 from application import db
-
-class Base(db.Model):
-    __abstract__  = True
-    id = db.Column(db.Integer, primary_key=True)
-    date_created = db.Column(db.DateTime,  default=db.func.current_timestamp())
+from application.models import Base
 
 class Notification(Base):
     __tablename__ = 'notifications'
@@ -16,9 +12,6 @@ class Notification(Base):
         self.title = title
         self.description = description
         self.publisher_id = publisher_id
-
-    def get_id(self):
-        return self.id
 
 class Instrument(Base):
     __tablename__ = 'instruments'
@@ -50,11 +43,11 @@ class Location(Base):
         self.country = country
         self.notification_id = notification_id
 
-def get_highest_notif_id():
+def get_highest_notification_id():
     result = db.engine.execute('SELECT id FROM notifications ORDER BY id DESC LIMIT 1;')
     return result.fetchone()[0]
 
-def get_num_of_notifs():
+def get_number_of_notifications():
     result = db.engine.execute('SELECT COUNT(*) FROM notifications;')
     return result.fetchone()[0]
 

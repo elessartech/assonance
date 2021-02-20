@@ -5,8 +5,8 @@
   <section class="notification-panel">
         <span class="notification-header-btns">
             {% if current_user.is_authenticated %}
-                <a href="/notifications/my-notifications" class=" btn btn-dark btn-xs">My notifications</a>
-                <a href="/notifications/new-notification" class=" btn btn-success btn-xs">Create new notification</a>
+                <a href="/my-notifications/{{current_user.get_id()}}" class=" btn btn-dark btn-xs">My notifications</a>
+                <a href="/new-notification" class=" btn btn-success btn-xs">Create new notification</a>
             {% else %}
                 <span>One needs to be authorized in order to create notifications...</span>
             {% endif %}
@@ -16,10 +16,9 @@
             <tr>
                 <th>Title</th>
                 <th>Publisher</th>
-                <th>Instrument</th>
+                <th>Instruments</th>
                 <th>Genres</th>
                 <th>Location</th>
-                <th>Likes</th>
             </tr>
             </thead>
             <tbody>
@@ -49,9 +48,6 @@
                             </td>
                             <td class="notification-location">
                                 <span class="label label-primary">{{notification.country}}</span>
-                            </td>
-                            <td class="notification-likes">
-                                {{notification.likes}}
                             </td>
                         </tr>
                 {% endfor %}

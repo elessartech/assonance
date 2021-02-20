@@ -1,8 +1,8 @@
-from flask import request, render_template, session, redirect, url_for
+from flask import abort, request, render_template, session, redirect, url_for
 from application import app
 from application import db
-from application.notifications.forms import NewNotification
-from application.notifications.models import Notification, Location, Genre, Instrument, get_highest_notif_id, get_all_notifications, get_notifications_by_user_id, get_notification_by_notification_id
+from application.notifications.forms import NewNotification, FilterNotifications
+from application.notifications.models import Notification, Location, Genre, Instrument, get_highest_notification_id, get_all_notifications, get_notifications_by_user_id, get_notification_by_notification_id
 
 @app.route('/notifications', methods=["GET"])
 def notifications():
@@ -13,13 +13,15 @@ def notifications():
 def new_notification():
     if request.method == "GET":
             return render_template("notifications/new-notification.html", form=NewNotification())
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
     form=NewNotification(request.form)
     if not form.validate():
         return render_template("notifications/new-notification.html", form = form)
     new_notification_ds = Notification(form.title.data, form.description.data, form.publisher_id.data)
     db.session().add(new_notification_ds)
     db.session.commit()
-    new_notification_id = int(get_highest_notif_id())
+    new_notification_id = int(get_highest_notification_id())
     objects_to_save = [new_notification_ds, Location(form.country.data, new_notification_id)]
     objects_to_save.append(Genre(form.genres.data, new_notification_id))
     objects_to_save.append(Instrument(form.instruments.data, new_notification_id))
@@ -30,7 +32,8 @@ def new_notification():
 @app.route('/my-notifications/<user_id>',  methods=["GET"])
 def my_notifications(user_id):
     notifications_by_id = get_notifications_by_user_id(user_id)
-    return render_template("notifications/my-notifications.html", notifications = notifications_by_id) 
+    filter_form = FilterNotifications()
+    return render_template("notifications/my-notifications.html", notifications = notifications_by_id, filter_form = filter_form) 
 
 @app.route('/notification/<notification_id>',  methods=["GET"])
 def notification(notification_id):
