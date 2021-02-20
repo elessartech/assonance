@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div style="width: 80%">
+  <div>
+    <legend>Sign up</legend>
+    {{error}}
+    <form method="POST" accept-charset="UTF-8" role="form">
+      <select name="role">
+        <option value="musician">Musician</option>
+        <option value="band">Band</option>
+      </select>
+      <input type="text" name="name" placeholder="Name" />
+      <input type="text" name="email" placeholder="Email" />
+      <input type="password" name="password" placeholder="Password" />
+      <input type="password" name="confirm_password" placeholder="Confirm password" />
+      <button type="submit" name="submit">Submit</button>
+    </form>  
+  </div>
+</div>
+
+{% endblock %}

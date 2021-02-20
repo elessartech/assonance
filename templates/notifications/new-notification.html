@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div style="width: 80%">
+    <div>
+    <legend>Create new notification</legend>
+    {{error}}
+    <form method="POST" accept-charset="UTF-8" role="form">
+        <input type="text" name="title" placeholder="Title" />
+        <input type="text" name="description" placeholder="Describe your notification"/>
+        <input type="hidden" name="publisher_id" value="{{session['user_id']}}"/>
+        <select name="instrument" placeholder="Select the instrument you play">
+            {% for instrument in instruments %}
+                <option value="{{instrument[0]}}">{{instrument[1]}}</option>
+            {% endfor %}
+        </select>
+        <select name="genre" placeholder="Select the genre you are playing in">
+            {% for genre in genres %}
+                <option value="{{genre[0]}}">{{genre[1]}}</option>
+            {% endfor %}
+        </select>
+        <select name="location" placeholder="Select the country you are situated at">
+            {% for location in locations %}
+                <option value="{{location[0]}}">{{location[1]}}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" name="submit">Submit</button>
+    </form>  
+    </div>
+</div>
+
+{% endblock %}

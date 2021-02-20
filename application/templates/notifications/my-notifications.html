@@ -37,14 +37,10 @@
                                 {{ notification.publisher_name }}
                             </td>
                             <td class="notification-instrument">
-                                {% for instrument in notification.instruments %}
-                                    {{ instrument }}
-                                {% endfor %}
+                                {{ notification.instrument }}
                             </td>
                             <td class="notification-genres">
-                                {% for genre in notification.genres %}
-                                    {{ genre }}
-                                {% endfor %}
+                                {{ notification.genre }}
                             </td>
                             <td class="notification-location">
                                 <span class="label label-primary">{{notification.country}}</span>

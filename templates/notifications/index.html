@@ -1,24 +1,15 @@
 {% extends "layout.html" %}
 
 {% block content %}
-{% macro render_field(field, placeholder=None) %}
-    {% set css_class = 'form-control ' + kwargs.pop('class', '') %}
-    {{ field(class=css_class, placeholder=placeholder, **kwargs) }}
-{% endmacro %}
-
   <section class="notification-panel">
         <span class="notification-header-btns">
-            {% if current_user.is_authenticated %}
+            {% if session["musician"] or session["band"] %}
                 <a href="/new-notification" class=" btn btn-success btn-xs">Create new notification</a>
             {% else %}
                 <span>One needs to be authorized in order to create notifications...</span>
             {% endif %}
         </span>
         <form class="notification-search input-group" method="POST">
-            <!--<input type="text" placeholder="Genres, band name, location..." class="input-sm form-control">-->
-            {{ form.csrf_token }}
-                {{ render_field(form.show, class_="uk-input") }}
-                {{ render_field(form.filter, class_="uk-input") }}
                 <span class="notification-search-btn input-group-btn">
                     <button type="submit" class="btn btn-sm btn-info">Search</button>
                 </span>
@@ -41,7 +32,7 @@
                         <tr class="bg-dark" style="color: white;">
                     {% endif %}
                             <td class="notification-name">
-                                <a href="/notification/{{notification.id}}">{{notification[0].title}}</a>
+                                <a href="/notification/{{notification.id}}">{{notification.title}}</a>
                                 <br>
                                 <small>Posted {{notification.date_created}}</small>
                             </td>
@@ -49,13 +40,13 @@
                                 {{ notification.publisher_name }}
                             </td>
                             <td class="notification-instrument">
-                                {{ notification }}
+                                {{ notification.instrument }}
                             </td>
                             <td class="notification-genres">
-                                {{notification.name}}
+                                {{notification.genre}}
                             </td>
                             <td class="notification-location">
-                                <span class="label label-primary">{{notification.country}}</span>
+                                {{notification.location|capitalize}}
                             </td>
                         </tr>
                 {% endfor %}

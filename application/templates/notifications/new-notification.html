@@ -16,8 +16,8 @@
         {{ render_field(form.title, placeholder="Title") }}
         {{ render_field(form.description, placeholder="Describe your notification") }}
         {{ render_field(form.publisher_id, value=current_user.get_id()) }}
-        {{ render_field(form.instruments, placeholder="Select the instruments you play") }}
-        {{ render_field(form.genres, placeholder="Select the genres you are playing in") }}
+        {{ render_field(form.instrument, placeholder="Select the instrument you play") }}
+        {{ render_field(form.genre, placeholder="Select the genre you are playing in") }}
         {{ render_field(form.country, placeholder="Select the country you are situated at") }}
     <button type="submit" name="submit">Submit</button>
     </form>  

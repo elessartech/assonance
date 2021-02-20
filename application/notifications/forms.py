@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import TextField, SelectMultipleField, SelectField
+from wtforms import TextField, SelectField
 from wtforms.fields.simple import HiddenField
 from wtforms.validators import Required
 from wtforms.widgets import TextArea
@@ -10,9 +10,10 @@ class NewNotification(FlaskForm):
     title = TextField('Title', [Required(message='Please, provide the title for your notification')])
     description = TextField('Description',[Required(message='Provide a description')], widget=TextArea())
     publisher_id = HiddenField()
-    genres = SelectMultipleField('Genres', [Required(message='Select genres')], choices=get_genres())
+    genre = SelectField('Genres', [Required(message='Select genres')], choices=get_genres())
     country = SelectField('Country', [Required(message='Select a country')], choices=get_countries())
-    instruments = SelectMultipleField('Instruments', [Required(message='Select instruments')], choices=get_instruments())
+    instrument = SelectField('Instruments', [Required(message='Select instruments')], choices=get_instruments())
 
 class FilterNotifications(FlaskForm):
-    filter = RadioField('Filter by:', choices=['no filter', ' by publisher', 'by instruments', 'by genres', 'by location'], default='no filter', validators=[Required()])
+    show = RadioField('Show notifications', choices=['all notifications', 'my notifications'], default='all notifications', validators=[Required()])
+    filter = RadioField('Filter by:', choices=['no filter', 'instruments', 'genres', 'locations'], default='no filter', validators=[Required()])

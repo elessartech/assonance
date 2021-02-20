@@ -16,21 +16,21 @@ class Notification(Base):
 class Instrument(Base):
     __tablename__ = 'instruments'
 
-    names = db.Column(db.ARRAY(db.String(128)), nullable = False)
+    instrument_name = db.Column(db.String(128), nullable = False)
     notification_id = db.Column(db.Integer, db.ForeignKey('notifications.id'), nullable=False)
 
-    def __init__(self, names, notification_id):
-        self.names = names
+    def __init__(self, instrument_name, notification_id):
+        self.instrument_name = instrument_name
         self.notification_id = notification_id
 
 class Genre(Base):
     __tablename__ = 'genres'
 
-    names = db.Column(db.ARRAY(db.String(128)), nullable = False)
+    genre_name = db.Column(db.String(128), nullable = False)
     notification_id = db.Column(db.Integer, db.ForeignKey('notifications.id'), nullable=False)
 
-    def __init__(self, names, notification_id):
-        self.names = names
+    def __init__(self, genre_name, notification_id):
+        self.genre_name = genre_name
         self.notification_id = notification_id
 
 class Location(Base):
@@ -53,7 +53,7 @@ def get_number_of_notifications():
 
 def get_all_notifications():
     result = db.engine.execute(
-    f'SELECT n.id, n.title, n.description, n.likes, n.date_created as date_created, u.name as publisher_name, u.role as publisher_role, g.names as genres, i.names as instruments, '
+    f'SELECT n.id, n.title, n.description, n.date_created as date_created, u.name as publisher_name, u.role as publisher_role, g.name as genre, i.name as instrument, '
     f'l.country as country FROM notifications n '
     f'LEFT JOIN users u ON u.id = n.publisher_id '
     f'LEFT JOIN genres g ON g.notification_id = n.id '
@@ -63,7 +63,7 @@ def get_all_notifications():
 
 def get_notifications_by_user_id(id):
     result = db.engine.execute(
-    f'SELECT n.id, n.title, n.description, n.likes, n.date_created as date_created, u.name as publisher_name, u.role as publisher_role, g.names as genres, i.names as instruments, '
+    f'SELECT n.id, n.title, n.description, n.date_created as date_created, u.name as publisher_name, u.role as publisher_role, g.name as genre, i.name as instrument, '
     f'l.country as country FROM notifications n '
     f'LEFT JOIN users u ON u.id = n.publisher_id '
     f'LEFT JOIN genres g ON g.notification_id = n.id '
@@ -74,7 +74,7 @@ def get_notifications_by_user_id(id):
 
 def get_notification_by_notification_id(id):
     result = db.engine.execute(
-    f'SELECT n.id, n.title, n.description, n.likes, n.date_created as date_created, u.name as publisher_name, u.role as publisher_role, g.names as genres, i.names as instruments, '
+    f'SELECT n.id, n.title, n.description, n.date_created as date_created, u.name as publisher_name, u.role as publisher_role, g.name as genre, i.name as instrument, '
     f'l.country as country FROM notifications n '
     f'LEFT JOIN users u ON u.id = n.publisher_id '
     f'LEFT JOIN genres g ON g.notification_id = n.id '

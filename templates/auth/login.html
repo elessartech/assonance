@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div style="width: 80%">
+  <div>
+    <legend>Log in</legend>
+    {{error}}
+    <form method="POST" accept-charset="UTF-8" role="form">
+      <input type="text" name="email" placeholder="Email" />
+      <input type="password" name="password" placeholder="Password" />
+      <button type="submit" name="submit">Submit</button>
+    </form>  
+  </div>
+</div>
+
+{% endblock %}

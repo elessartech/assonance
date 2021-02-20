@@ -21,7 +21,6 @@ def login():
     login_user(user)
     path_to_redir = "user_profile"
     session[user.role] = True
-    session["csrf_token"] = os.urandom(16).hex() 
     return redirect(url_for(path_to_redir, id=user.id))
 
 @app.route('/logout', methods=["GET"])
