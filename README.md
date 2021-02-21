@@ -2,13 +2,18 @@
 
 Tämä on tsoha-harjoitustyökurssissa kehitetty web-sovellus. 
 
+## Sovelluksen tarkoitus
+
+Assonance-sovelluksen tarkoituksena on luoda web-portaali, jonka avulla sekä bändit että muusikot pystyvät löytämään sopivan seuran soittamiseen. 
+
 ## Demo
 
 **https://assonance.herokuapp.com/**
 
-## Sovelluksen tarkoitus
-
-Assonance-sovelluksen tarkoituksena on luoda web-portaali, jonka avulla sekä bändit että muusikot pystyvät löytämään sopivan seuran soittamiseen. 
+## Kirjautuminen järjestelmävalvojana
+ 
+ - Email: admin@test.com
+ - Salasana: admin
 
 ## Toiminnallisuus
 
