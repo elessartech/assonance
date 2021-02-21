@@ -1,6 +1,7 @@
 from db import db
 from flask import session
 from util.security import encrypt_password, verify_password, random_num_with_n_digits
+import os
 
 def get_user_by_email(email):
     sql = f"SELECT id, password, role FROM users WHERE email='{email}'"
@@ -35,13 +36,13 @@ def logout():
 def signup(name,email,role,password):
     hash_value = encrypt_password(password)
     try:
-        sql = f"INSERT INTO users (name,email,role,password) VALUES ('{name}','{email}','{role}','{password}')"
+        sql = f"INSERT INTO users (name,email,role,password) VALUES ('{name}','{email}','{role}','{hash_value}')"
         db.session.execute(sql)
         db.session.commit()
     except:
         return False
     return True
 
-if not get_user_by_email("admin@test.com"):
-    signup("admin", "admin@test.com", "admin", "admin")
+if not get_user_by_email(os.getenv("ADMIN_EMAIL")):
+    signup(os.getenv("ADMIN_NAME"), os.getenv("ADMIN_EMAIL"), "admin", os.getenv("ADMIN_PASSWD"))
     
