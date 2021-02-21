@@ -1,10 +1,10 @@
 import os
 
-SQLALCHEMY_DATABASE_URI = "postgresql://postgres:persik@localhost:5432/assonance" #os.getenv("DATABASE_URL")
+SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL")
 
-SECRET_KEY = "95d3763bb55e744e77dd181a47b4e1c6" #os.getenv("SECRET_KEY")
+SECRET_KEY = os.getenv("SECRET_KEY")
 
-DEBUG = True
+DEBUG = False
  
 SQLALCHEMY_TRACK_MODIFICATIONS = True
 
