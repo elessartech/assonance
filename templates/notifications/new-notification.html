@@ -7,6 +7,7 @@
     <legend>Create new notification</legend>
     {{error}}
     <form method="POST" accept-charset="UTF-8" role="form">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
         <input type="text" name="title" placeholder="Title" />
         <input type="text" name="description" placeholder="Describe your notification"/>
         <input type="hidden" name="publisher_id" value="{{session['user_id']}}"/>
@@ -25,6 +26,7 @@
                 <option value="{{location[0]}}">{{location[1]}}</option>
             {% endfor %}
         </select>
+        <a href="/notifications" class=" btn btn-dark btn-xs">Cancel</a>
         <button type="submit" name="submit">Submit</button>
     </form>  
     </div>

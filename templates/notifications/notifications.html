@@ -9,19 +9,17 @@
                 <span>One needs to be authorized in order to create notifications...</span>
             {% endif %}
         </span>
-        <form class="notification-search input-group" method="POST">
-                <span class="notification-search-btn input-group-btn">
-                    <button type="submit" class="btn btn-sm btn-info">Search</button>
-                </span>
-        </form>
         <table class="table table-hover p-table">
             <thead>
             <tr>
-                <th>Title</th>
-                <th>Publisher</th>
-                <th>Instruments</th>
-                <th>Genres</th>
-                <th>Location</th>
+                <th><a href="/notifications?filter=title">Title</a></th>
+                <th><a href="/notifications?filter=publisher_name">Publisher</a></th>
+                <th><a href="/notifications?filter=instrument">Instruments</a></th>
+                <th><a href="/notifications?filter=genre">Genres</a></th>
+                <th><a href="/notifications?filter=location">Location</a></th>
+                {% if session["admin"] %}
+                    <th>Operations</th>
+                {% endif %}
             </tr>
             </thead>
             <tbody>
@@ -33,8 +31,6 @@
                     {% endif %}
                             <td class="notification-name">
                                 <a href="/notification/{{notification.id}}">{{notification.title}}</a>
-                                <br>
-                                <small>Posted {{notification.date_created}}</small>
                             </td>
                             <td class="notification-publisher">
                                 {{ notification.publisher_name }}
@@ -48,6 +44,12 @@
                             <td class="notification-location">
                                 {{notification.location|capitalize}}
                             </td>
+                            {% if session["admin"] %}
+                                <td class="notification-operations">
+                                    <a href="/edit-notification/{{ notification.id }}">Edit</a>
+                                    <a href="/delete-notification/{{ notification.id }}">Delete</a>
+                                </td>
+                            {% endif %}
                         </tr>
                 {% endfor %}
             </tbody>

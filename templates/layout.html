@@ -33,7 +33,7 @@
               <li class="nav-item">
                 <a class="nav-link" href="/notifications">Notifications</a>
               </li>
-              {% if session["musician"] or session["band"] %}
+              {% if session["musician"] or session["band"] or session["admin"] %}
                 <li class="nav-item">
                   <a class="nav-link" href="/logout">Log out</a>
                 </li>
@@ -54,5 +54,7 @@
 
         {% endblock %}
     </main>
+
+<script href="{{url_for('static', filename='js/index.js')}}"></script>
 </body>
 </html>
