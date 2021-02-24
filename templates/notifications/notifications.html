@@ -1,59 +1,60 @@
 {% extends "layout.html" %}
 
 {% block content %}
-  <section class="notification-panel">
-        <span class="notification-header-btns">
-            {% if session["musician"] or session["band"] %}
-                <a href="/new-notification" class=" btn btn-success btn-xs">Create new notification</a>
-            {% else %}
-                <span>One needs to be authorized in order to create notifications...</span>
+<section class="notification-panel">
+    <span class="notification-header-btns">
+        {% if session["musician"] or session["band"] or session["admin"] %}
+            <a href="/new-notification" class=" btn btn-success btn-xs">Create new notification</a>
+            <a href="/my-notifications" class=" btn btn-dark btn-xs">My notifications</a>
+        {% else %}
+            <span>One needs to be authorized in order to create notifications...</span>
+        {% endif %}
+    </span>
+    <table class="table table-hover p-table">
+        <thead>
+        <tr>
+            <th><a href="/notifications?filter=title">Title</a></th>
+            <th><a href="/notifications?filter=publisher_name">Publisher</a></th>
+            <th><a href="/notifications?filter=instrument">Instruments</a></th>
+            <th><a href="/notifications?filter=genre">Genres</a></th>
+            <th><a href="/notifications?filter=location">Location</a></th>
+            {% if session["admin"] %}
+                <th>Operations</th>
             {% endif %}
-        </span>
-        <table class="table table-hover p-table">
-            <thead>
-            <tr>
-                <th><a href="/notifications?filter=title">Title</a></th>
-                <th><a href="/notifications?filter=publisher_name">Publisher</a></th>
-                <th><a href="/notifications?filter=instrument">Instruments</a></th>
-                <th><a href="/notifications?filter=genre">Genres</a></th>
-                <th><a href="/notifications?filter=location">Location</a></th>
-                {% if session["admin"] %}
-                    <th>Operations</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for notification in notifications %}
+                {% if notification.publisher_role == "musician" %}
+                    <tr class="bg-light">
+                {% elif notification.publisher_role == "band" %}
+                    <tr class="bg-dark" style="color: white;">
                 {% endif %}
-            </tr>
-            </thead>
-            <tbody>
-                {% for notification in notifications %}
-                    {% if notification.publisher_role == "musician" %}
-                        <tr class="bg-light">
-                    {% elif notification.publisher_role == "band" %}
-                        <tr class="bg-dark" style="color: white;">
-                    {% endif %}
-                            <td class="notification-name">
-                                <a href="/notification/{{notification.id}}">{{notification.title}}</a>
+                        <td class="notification-name">
+                            <a href="/notification/{{notification.id}}">{{notification.title}}</a>
+                        </td>
+                        <td class="notification-publisher">
+                            {{ notification.publisher_name }}
+                        </td>
+                        <td class="notification-instrument">
+                            {{ notification.instrument }}
+                        </td>
+                        <td class="notification-genres">
+                            {{notification.genre}}
+                        </td>
+                        <td class="notification-location">
+                            {{notification.location|capitalize}}
+                        </td>
+                        {% if session["admin"] %}
+                            <td class="notification-operations">
+                                <a href="/edit-notification/{{ notification.id }}">Edit</a>
+                                <a href="/delete-notification/{{ notification.id }}">Delete</a>
                             </td>
-                            <td class="notification-publisher">
-                                {{ notification.publisher_name }}
-                            </td>
-                            <td class="notification-instrument">
-                                {{ notification.instrument }}
-                            </td>
-                            <td class="notification-genres">
-                                {{notification.genre}}
-                            </td>
-                            <td class="notification-location">
-                                {{notification.location|capitalize}}
-                            </td>
-                            {% if session["admin"] %}
-                                <td class="notification-operations">
-                                    <a href="/edit-notification/{{ notification.id }}">Edit</a>
-                                    <a href="/delete-notification/{{ notification.id }}">Delete</a>
-                                </td>
-                            {% endif %}
-                        </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </section>
+                        {% endif %}
+                    </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
 
 {% endblock %}

@@ -15,7 +15,6 @@ def login(email, password):
         return False
     else:
         if verify_password(password, user.password):
-            print(user)
             session[user.role] = True
             session["user_id"] = user.id
             session["csrf_token"] = random_num_with_n_digits(16)
