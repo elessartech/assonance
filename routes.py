@@ -2,6 +2,7 @@ from app import app
 from flask import render_template, request, redirect, session, abort
 import notifications, users
 from util.data import get_locations, get_instruments, get_genres
+from datetime import datetime
 
 locations = get_locations()
 genres = get_genres()
@@ -59,10 +60,20 @@ def show_notifications():
         else:
             all_notifications = notifications.get_all_notifications()
             return render_template("notifications/notifications.html", notifications=all_notifications)
+
+@app.route("/my-notifications/<user_id>", methods=["GET"])
+def show_user_notifications(user_id):
+    if request.method == "GET":
+        if session["user_id"] != int(user_id):
+            abort(403)
+        user_notifications = notifications.get_notifications_by_user_id(user_id)
+        return render_template("notifications/my-notifications.html", notifications=user_notifications)
     
 @app.route("/new-notification", methods=["GET", "POST"])
 def new_notification():
     if request.method == "GET":
+        if not session["user_id"]:
+            abort(403)
         return render_template("notifications/new-notification.html", locations=locations, genres=genres, instruments=instruments)
     if request.method == "POST":
         if int(session["csrf_token"]) != int(request.form["csrf_token"]):
@@ -75,7 +86,9 @@ def new_notification():
         instrument = request.form["instrument"]
         if not title or not description or not publisher_id or not location or not genre or not instrument:
             return render_template("notifications/new-notification.html", error="Please, provide all the required information",locations=locations, genres=genres, instruments=instruments)
-        if notifications.save_notification(title, description, publisher_id):
+        timestamp = datetime.now()
+        created_on = timestamp.isoformat()
+        if notifications.save_notification(title, description, publisher_id, created_on):
             last_notification_id = notifications.get_highest_notification_id()
             saved_location = notifications.save_location(location, last_notification_id)
             saved_genre = notifications.save_genre(genre, last_notification_id)
@@ -138,6 +151,6 @@ def edit_single_notificaiton(notification_id):
 @app.route('/applications/<user_id>',  methods=["GET"])
 def show_applications(user_id):
     if request.method == "GET":
-        if session.user_id != user_id:
+        if session["user_id"] != int(user_id):
             abort(403)
         return render_template("applications/applications.html")

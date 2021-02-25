@@ -2,6 +2,7 @@ from db import db
 from flask import session
 from util.security import encrypt_password, verify_password, random_num_with_n_digits
 import os
+from datetime import datetime
 
 def get_user_by_email(email):
     sql = f"SELECT id, password, role FROM users WHERE email='{email}'"
@@ -34,8 +35,10 @@ def logout():
 
 def signup(name,email,role,password):
     hash_value = encrypt_password(password)
+    timestamp = datetime.now()
+    created_on = timestamp.isoformat()
     try:
-        sql = f"INSERT INTO users (name,email,role,password) VALUES ('{name}','{email}','{role}','{hash_value}')"
+        sql = f"INSERT INTO users (name,email,role,password,created_on) VALUES ('{name}','{email}','{role}','{hash_value}','{created_on}')"
         db.session.execute(sql)
         db.session.commit()
     except:

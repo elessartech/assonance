@@ -10,25 +10,26 @@ def get_number_of_notifications():
 
 def get_all_notifications():
     result = db.session.execute(
-    f'SELECT n.id, n.title, n.description, u.name as publisher_name, u.role as publisher_role, g.name as genre, i.name as instrument, l.name as location ' 
-    f'FROM notifications n ' 
-    f'LEFT JOIN users u ON u.id = n.publisher_id '
-    f'LEFT JOIN genres g ON g.notification_id = n.id '
-    f'LEFT JOIN instruments i ON i.notification_id = n.id '
-    f'LEFT JOIN locations l ON l.notification_id = n.id;')
-    return result.fetchall()
-
-def get_all_notifications_grouped_by_filter(filter):
-    result = db.session.execute(
-    f'SELECT n.id, n.title as title, n.description, u.name as publisher_name, u.role as publisher_role, g.name as genre, i.name as instrument, l.name as location ' 
+    f'SELECT n.id, n.hidden, n.created_on, n.title, n.description, u.name as publisher_name, u.role as publisher_role, g.name as genre, i.name as instrument, l.name as location, n.created_on ' 
     f'FROM notifications n ' 
     f'LEFT JOIN users u ON u.id = n.publisher_id '
     f'LEFT JOIN genres g ON g.notification_id = n.id '
     f'LEFT JOIN instruments i ON i.notification_id = n.id '
     f'LEFT JOIN locations l ON l.notification_id = n.id '
-    f'ORDER BY {filter};')
+    f'WHERE n.hidden=0;')
     return result.fetchall()
 
+def get_all_notifications_grouped_by_filter(filter):
+    result = db.session.execute(
+    f'SELECT n.id, n.title as title, n.description, u.name as publisher_name, u.role as publisher_role, g.name as genre, i.name as instrument, l.name as location, n.created_on ' 
+    f'FROM notifications n ' 
+    f'LEFT JOIN users u ON u.id = n.publisher_id '
+    f'LEFT JOIN genres g ON g.notification_id = n.id '
+    f'LEFT JOIN instruments i ON i.notification_id = n.id '
+    f'LEFT JOIN locations l ON l.notification_id = n.id '
+    f'WHERE n.hidden=0 '
+    f'ORDER BY {filter};')
+    return result.fetchall()
 
 def get_notifications_by_user_id(id):
     result = db.session.execute(
@@ -52,8 +53,8 @@ def get_notification_by_notification_id(id):
     f'WHERE n.id={id};')
     return result.fetchone()
 
-def save_notification(title, description, publisher_id):
-    query = f"INSERT INTO notifications (title,description,publisher_id) VALUES ('{title}','{description}','{publisher_id}');"
+def save_notification(title, description, publisher_id, created_on):
+    query = f"INSERT INTO notifications (title,description,publisher_id,created_on) VALUES ('{title}','{description}','{publisher_id}','{created_on}');"
     result = db.session.execute(query)
     db.session.commit()
     return True

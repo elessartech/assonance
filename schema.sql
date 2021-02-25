@@ -1,39 +1,43 @@
 CREATE TABLE users (
     id SERIAL PRIMARY KEY, 
-    name TEXT, 
-    email TEXT UNIQUE,
+    name TEXT NOT NULL, 
+    email TEXT UNIQUE NOT NULL,
     role TEXT,
-    password TEXT
+    password TEXT NOT NULL,
+    created_on TEXT   
 );
 
 CREATE TABLE notifications (
     id SERIAL PRIMARY KEY, 
-    title TEXT, 
+    title TEXT NOT NULL, 
     description TEXT,
-    publisher_id INTEGER
+    publisher_id INTEGER REFERENCES users,
+    hidden INTEGER DEFAULT 0,
+    created_on TEXT
 );
 
 CREATE TABLE instruments (
     id SERIAL PRIMARY KEY, 
-    name TEXT,
-    notification_id INTEGER
+    name TEXT NOT NULL,
+    notification_id INTEGER REFERENCES notifications
 );
 
 CREATE TABLE genres (
     id SERIAL PRIMARY KEY, 
-    name TEXT, 
-    notification_id INTEGER
+    name TEXT NOT NULL, 
+    notification_id INTEGER REFERENCES notifications
 );
 
 CREATE TABLE locations (
     id SERIAL PRIMARY KEY, 
-    name TEXT,
-    notification_id INTEGER
+    name TEXT NOT NULL,
+    notification_id INTEGER REFERENCES notifications
 );
 
 CREATE TABLE applications (
     id SERIAL PRIMARY KEY,  
-    message TEXT,
-    sender_id INTEGER,
-    notification_id INTEGER
+    message TEXT NOT NULL,
+    sender_id INTEGER REFERENCES users,
+    notification_id INTEGER REFERENCES notifications,
+    created_on TEXT
 );
