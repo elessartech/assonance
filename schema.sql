@@ -4,7 +4,7 @@ CREATE TABLE users (
     email TEXT UNIQUE NOT NULL,
     role TEXT,
     password TEXT NOT NULL,
-    created_on TEXT   
+    created_on TEXT  
 );
 
 CREATE TABLE notifications (

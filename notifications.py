@@ -48,7 +48,7 @@ def get_notifications_by_user_id(id):
 
 def get_notification_by_notification_id(id):
     result = db.session.execute(
-    f'SELECT n.id, n.title, n.description, u.name as publisher_name, u.role as publisher_role, g.name as genre, i.name as instrument, '
+    f'SELECT n.id, n.title, n.description, n.publisher_id, u.name as publisher_name, u.role as publisher_role, g.name as genre, i.name as instrument, '
     f'l.name as location FROM notifications n '
     f'LEFT JOIN users u ON u.id = n.publisher_id '
     f'LEFT JOIN genres g ON g.notification_id = n.id '

@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <section class="apply-form" style="width: 80%">
+        <legend>Your application for the notification "{{notification.title}}" by {{notification.publisher_name}}</legend>
+        {{error}}
+        <form method="POST" accept-charset="UTF-8" role="form">
+            <div class="form-group">
+                <label for="message">Enter your message: </label>
+                <textarea class="form-control" id="message" name="message" rows="3"></textarea>
+            </div>
+            <input type="hidden" name="user_id" value="{{session['user_id']}}" />
+            <input type="hidden" name="csrf_token" value="{{session['csrf_token']}}" />
+            <a href="/notifications" class="btn btn-dark btn-xs">Cancel</a>
+            <button type="submit" class="btn btn-success btn-xs" name="submit">Send</button>
+        </form>
+    </section>
+{% endblock %}

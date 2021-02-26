@@ -11,8 +11,10 @@
     <p>Genre: {{notification.genre}}</p>
     <p>Instruments: {{notification.instrument}}</p>
     <p>Location: {{notification.location|capitalize}}</p>
-
-    <a href="#" class=" btn btn-dark btn-xs">Apply</a>
-
+    {% if session["user_id"] == notification.publisher_id|int %}
+        <a class=" btn btn-dark btn-xs disabled">Apply</a>
+    {% else %}
+        <a href="/apply/{{notification.id}}" class=" btn btn-dark btn-xs">Apply</a>
+    {% endif %}
 </section>
 {% endblock %}

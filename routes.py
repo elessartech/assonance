@@ -1,6 +1,6 @@
 from app import app
 from flask import render_template, request, redirect, session, abort
-import notifications, users
+import notifications, users, applications
 from util.resources import get_locations, get_instruments, get_genres
 from util.security import get_timestamp
 
@@ -174,4 +174,25 @@ def show_applications(user_id):
     if request.method == "GET":
         if session["user_id"] != int(user_id):
             abort(403)
-        return render_template("applications/applications.html")
+        received_applications = applications.get_applications_for_publisher(user_id)
+        return render_template("applications/applications.html", applications=received_applications)
+
+@app.route('/apply/<notification_id>',  methods=["GET", "POST"])
+def apply_for_notification(notification_id):
+    notification_to_apply = notifications.get_notification_by_notification_id(notification_id)
+    if request.method == "GET":
+        if not session["user_id"]:
+            abort(403)
+        return render_template("applications/apply-form.html", notification=notification_to_apply)
+    if request.method == "POST":
+        if int(session["csrf_token"]) != int(request.form["csrf_token"]):
+            abort(403)
+        message = request.form["message"]
+        if not message:
+            return render_template("applications/apply-form.html", error="Please, enter your message.", notification = notification_to_apply)
+        sender_id = request.form["user_id"]
+        created_on = get_timestamp()
+        if applications.save_application(message, sender_id, notification_id, created_on):
+            return redirect("/notifications")
+        else:
+            return render_template("applications/apply-form.html", error="Something went wrong. Please, try again.", notification = notification_to_apply)

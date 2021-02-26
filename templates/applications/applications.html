@@ -2,8 +2,12 @@
 
 {% block content %}
 <section class="application-panel">
-
-    
-
+    {% if not applications %}
+        You havent received any applications in response to your notifications.
+    {% else %}
+        <figure>
+            {{applications}}
+        </figure>
+    {% endif %}
 </section>
 {% endblock %}
