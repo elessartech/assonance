@@ -1,13 +1,20 @@
 from db import db
 from flask import session
-from util.security import encrypt_password, get_timestamp, verify_password, random_num_with_n_digits
+from util.security import (
+    encrypt_password,
+    get_timestamp,
+    verify_password,
+    random_num_with_n_digits,
+)
 import os
+
 
 def get_user_by_email(email):
     sql = f"SELECT id, password, role FROM users WHERE email='{email}'"
     result = db.session.execute(sql)
     user = result.fetchone()
     return user
+
 
 def login(email, password):
     user = get_user_by_email(email)
@@ -22,17 +29,19 @@ def login(email, password):
         else:
             return False
 
-def logout():
-    if session.get('musician'):
-        del session['musician']
-    if session.get('band'):
-        del session['band']
-    if session.get('admin'):
-        del session['admin']
-    if session.get('csrf'):
-        del session['csrf']
 
-def signup(name,email,role,password):
+def logout():
+    if session.get("musician"):
+        del session["musician"]
+    if session.get("band"):
+        del session["band"]
+    if session.get("admin"):
+        del session["admin"]
+    if session.get("csrf"):
+        del session["csrf"]
+
+
+def signup(name, email, role, password):
     hash_value = encrypt_password(password)
     created_on = get_timestamp()
     try:
@@ -43,6 +52,11 @@ def signup(name,email,role,password):
         return False
     return True
 
+
 if not get_user_by_email(os.getenv("ADMIN_EMAIL")):
-    signup(os.getenv("ADMIN_NAME"), os.getenv("ADMIN_EMAIL"), "admin", os.getenv("ADMIN_PASSWD"))
-    
+    signup(
+        os.getenv("ADMIN_NAME"),
+        os.getenv("ADMIN_EMAIL"),
+        "admin",
+        os.getenv("ADMIN_PASSWD"),
+    )
