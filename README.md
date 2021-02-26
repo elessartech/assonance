@@ -35,6 +35,6 @@ Assonance-sovelluksen tarkoituksena on luoda web-portaali, jonka avulla sekä b�
     - Yhteystiedot
     - Päivämäärä, jona ilmoitus oli julkaistu
 - ⬜️ Bändi/muusikko voi vastata sopivaan ilmoitukseen.
-- ⬜️ Silloin kun sopiva bändi/musiikko on löytänyt ilmoituksen voi piilota.
+- ✅ Silloin kun sopiva bändi/musiikko on löytänyt ilmoituksen voi piilota.
 - ✅ Ilmoituksia voi selata
 - ✅ Ilmoituksia voi selata myös käyttäen sorttausta ja luokittelua. 
