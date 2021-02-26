@@ -5,7 +5,7 @@
     <span class="notification-header-btns">
         {% if session["musician"] or session["band"] or session["admin"] %}
             <a href="/new-notification" class=" btn btn-success btn-xs">Create new notification</a>
-            <a href="/my-notifications" class=" btn btn-dark btn-xs">My notifications</a>
+            <a href="/my-notifications/{{session['user_id']}}" class=" btn btn-dark btn-xs">My notifications</a>
         {% else %}
             <span>One needs to be authorized in order to create notifications...</span>
         {% endif %}

@@ -1,5 +1,6 @@
 from passlib.context import CryptContext
 from random import randint
+from datetime import datetime
 
 pwd_context = CryptContext(
         schemes=["pbkdf2_sha256"],
@@ -17,3 +18,8 @@ def random_num_with_n_digits(n):
     range_start = 10**(n-1)
     range_end = (10**n)-1
     return randint(range_start, range_end)
+
+def get_timestamp():
+    timestamp = datetime.now()
+    created_on = timestamp.isoformat()
+    return created_on

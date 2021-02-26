@@ -1,16 +1,20 @@
 from db import db
 
 def get_highest_notification_id():
-    result = db.session.execute('SELECT id FROM notifications ORDER BY id DESC LIMIT 1;')
+    result = db.session.execute(f'SELECT id FROM notifications ORDER BY id DESC LIMIT 1;')
     return result.fetchone()[0]
 
 def get_number_of_notifications():
-    result = db.session.execute('SELECT COUNT(*) FROM notifications;')
+    result = db.session.execute(f'SELECT COUNT(*) FROM notifications;')
+    return result.fetchone()[0]
+
+def get_notification_visibility(id):
+    result = db.session.execute(f'SELECT hidden FROM notifications WHERE id={id};')
     return result.fetchone()[0]
 
 def get_all_notifications():
     result = db.session.execute(
-    f'SELECT n.id, n.hidden, n.created_on, n.title, n.description, u.name as publisher_name, u.role as publisher_role, g.name as genre, i.name as instrument, l.name as location, n.created_on ' 
+    f'SELECT n.id, n.hidden, n.created_on, n.title, n.description, u.name as publisher_name, u.role as publisher_role, g.name as genre, i.name as instrument, l.name as location, n.created_on as created_on ' 
     f'FROM notifications n ' 
     f'LEFT JOIN users u ON u.id = n.publisher_id '
     f'LEFT JOIN genres g ON g.notification_id = n.id '
@@ -21,7 +25,7 @@ def get_all_notifications():
 
 def get_all_notifications_grouped_by_filter(filter):
     result = db.session.execute(
-    f'SELECT n.id, n.title as title, n.description, u.name as publisher_name, u.role as publisher_role, g.name as genre, i.name as instrument, l.name as location, n.created_on ' 
+    f'SELECT n.id, n.title as title, n.description, u.name as publisher_name, u.role as publisher_role, g.name as genre, i.name as instrument, l.name as location, n.created_on as created_on ' 
     f'FROM notifications n ' 
     f'LEFT JOIN users u ON u.id = n.publisher_id '
     f'LEFT JOIN genres g ON g.notification_id = n.id '
@@ -34,7 +38,7 @@ def get_all_notifications_grouped_by_filter(filter):
 def get_notifications_by_user_id(id):
     result = db.session.execute(
     f'SELECT n.id, n.title, n.description, u.name as publisher_name, u.role as publisher_role, g.name as genre, i.name as instrument, '
-    f'l.name as location FROM notifications n '
+    f'l.name as location, n.hidden as hidden, n.created_on as created_on FROM notifications n '
     f'LEFT JOIN users u ON u.id = n.publisher_id '
     f'LEFT JOIN genres g ON g.notification_id = n.id '
     f'LEFT JOIN instruments i ON i.notification_id = n.id '
@@ -103,6 +107,18 @@ def update_instrument(name, notification_id):
 
 def update_genre(name, notification_id):
     query = f"UPDATE genres SET name='{name}' WHERE notification_id={notification_id};"
+    result = db.session.execute(query)
+    db.session.commit()
+    return True
+
+def hide_notification(id):
+    query = f"UPDATE notifications SET hidden='1' WHERE id={id};"
+    result = db.session.execute(query)
+    db.session.commit()
+    return True
+
+def unhide_notification(id):
+    query = f"UPDATE notifications SET hidden='0' WHERE id={id};"
     result = db.session.execute(query)
     db.session.commit()
     return True

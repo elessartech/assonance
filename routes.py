@@ -1,8 +1,8 @@
 from app import app
 from flask import render_template, request, redirect, session, abort
 import notifications, users
-from util.data import get_locations, get_instruments, get_genres
-from datetime import datetime
+from util.resources import get_locations, get_instruments, get_genres
+from util.security import get_timestamp
 
 locations = get_locations()
 genres = get_genres()
@@ -86,8 +86,7 @@ def new_notification():
         instrument = request.form["instrument"]
         if not title or not description or not publisher_id or not location or not genre or not instrument:
             return render_template("notifications/new-notification.html", error="Please, provide all the required information",locations=locations, genres=genres, instruments=instruments)
-        timestamp = datetime.now()
-        created_on = timestamp.isoformat()
+        created_on = get_timestamp()
         if notifications.save_notification(title, description, publisher_id, created_on):
             last_notification_id = notifications.get_highest_notification_id()
             saved_location = notifications.save_location(location, last_notification_id)
@@ -147,6 +146,28 @@ def edit_single_notificaiton(notification_id):
                 return render_template("notifications/new-notification.html", error="Could not update the notification", notification = notification_to_edit, locations = locations, genres = genres, instruments = instruments)
         else:
             return render_template("notifications/new-notification.html", error="Could not update the notification", notification = notification_to_edit, locations = locations, genres = genres, instruments = instruments)
+
+@app.route('/hide-notification/<notification_id>',  methods=["GET"])
+def hide_notification_visibility(notification_id):
+    if request.method == "GET":
+        if not session["user_id"]:
+            abort(403)
+        was_notification_hidden = notifications.hide_notification(notification_id)
+        if was_notification_hidden:
+            return redirect("/my-notifications/" + str(session["user_id"]))
+        else:
+            return False
+
+@app.route('/unhide-notification/<notification_id>',  methods=["GET"])
+def unhide_notification_visibility(notification_id):
+    if request.method == "GET":
+        if not session["user_id"]:
+            abort(403)
+        was_notification_unhidden = notifications.unhide_notification(notification_id)
+        if was_notification_unhidden:
+            return redirect("/my-notifications/" + str(session["user_id"]))
+        else:
+            return False
 
 @app.route('/applications/<user_id>',  methods=["GET"])
 def show_applications(user_id):
