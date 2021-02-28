@@ -7,57 +7,51 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css" rel="stylesheet" />
     <link href="{{url_for('static', filename='css/index.css')}}" rel="stylesheet">
     <title>Assonance</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="margin: auto;">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="/">Assonance</a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-mdb-toggle="collapse"
-            data-mdb-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <i class="fas fa-bars"></i>
-          </button>
-          <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="/">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/notifications">Notifications</a>
-              </li>
-              {% if session["musician"] or session["band"] or session["admin"] %}
-                <li class="nav-item">
-                  <a class="nav-link" href="/applications/{{session.user_id}}">Applications</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/logout">Log out</a>
-                </li>
-              {% else %}
-                <li class="nav-item">
-                  <a class="nav-link" href="/login">Log in</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="/signup">Sign up</a>
-                </li>
-              {% endif %}
-            </ul>
-          </div>
-        </div>
-      </nav>
-    <main style="margin: 2em auto; width: 80%;">
-        {% block content %}
+  
+  <aside class="side-navbar nav-pos d-flex justify-content-between flex-wrap flex-column" id="sidebar">
+    <ul class="nav flex-column text-white w-100">
+      <a href="/" class="nav-link h3 text-white">
+        <i class="bx bx-music"></i> Assonance
+      </a>
+      <a href="/notifications" class="nav-link">
+        <i class="bx bx-notification"></i>
+        <span class="mx-2">Notifications</span>
+      </li>
+      {% if session["musician"] or session["band"] or session["admin"] %}
+        <a href="/applications/{{session.user_id}}" class="nav-link">
+          <i class="bx bx-note"></i>
+          <span class="mx-2">Applications</span>
+        </a>
+        <a href="/logout" class="nav-link">
+          <i class="bx bx-log-out"></i>
+          <span class="mx-2">Log out</span>
+        </a>
+      {% else %}
+        <a href="/login" class="nav-link">
+          <i class="bx bx-log-in"></i>
+          <span class="mx-2">Log in</span>
+        </a>
+        <a href="/signup" class="nav-link">
+          <i class="bx bx-door-open"></i>
+          <span class="mx-2">Sign up</span>
+        </a>
+      {% endif %}
+    </ul>
+    <a href="https://github.com/IlmastMaksim" target="_blank" class="w-100 mb-5 copyright">
+      © 2021 Maksim Ilmast
+    </a>
+  </aside>
+  <main>
+    {% block content %}
 
-        {% endblock %}
-    </main>
+    {% endblock %}
+  </main>
 
-<script href="{{url_for('static', filename='js/index.js')}}"></script>
+<script src="{{url_for('static', filename='js/index.js')}}"></script>
 </body>
 </html>

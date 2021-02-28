@@ -26,6 +26,10 @@ def login():
     if request.method == "POST":
         email = request.form["email"]
         password = request.form["password"]
+        if not email or not password:
+            return render_template(
+                "auth/login.html", error="Please, fill all the inputs."
+            )
         if users.login(email, password):
             return redirect("/notifications")
         else:
@@ -48,6 +52,10 @@ def signup():
         role = request.form["role"]
         password = request.form["password"]
         confirm_password = request.form["confirm_password"]
+        if not name or not email or not role or not password or not confirm_password:
+            return render_template(
+                "auth/signup.html", error="Please, fill all the inputs."
+            )
         if password != confirm_password:
             return render_template("auth/signup.html", error="Passwords do not match")
         if users.signup(name, email, role, password):
@@ -275,6 +283,7 @@ def show_applications(user_id):
         return render_template(
             "applications/applications.html", applications=received_applications
         )
+
 
 @app.route("/application/<user_id>/<application_id>", methods=["GET"])
 def show_single_application(user_id, application_id):

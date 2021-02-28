@@ -2,22 +2,36 @@
 
 {% block content %}
 
-<div style="width: 80%">
-  <div>
-    <legend>Sign up</legend>
-    {{error}}
-    <form method="POST" accept-charset="UTF-8" role="form">
-      <select name="role">
-        <option value="musician">Musician</option>
-        <option value="band">Band</option>
-      </select>
-      <input type="text" name="name" placeholder="Name" />
-      <input type="text" name="email" placeholder="Email" />
-      <input type="password" name="password" placeholder="Password" />
-      <input type="password" name="confirm_password" placeholder="Confirm password" />
-      <button type="submit" name="submit">Submit</button>
-    </form>  
-  </div>
-</div>
+<figure class="card logging-form-wrap">
+	<div class="card-body logging-form-body">
+		<h3 class="card-title text-center">Sign Up</h3>
+		{{error}}
+		<div class="card-text">
+		  <form class="logging-form" method="POST" accept-charset="UTF-8" role="form">
+        <select class="custom-select" name="role">
+          <option value="musician">Musician</option>
+          <option value="band">Band</option>
+        </select>
+        <div class="form-group">
+					<label for="loggin-name-input">Name</label>
+					<input id="loggin-name-input" type="text" class="form-control form-control-sm" name="name" placeholder="Name" />
+				</div>
+				<div class="form-group">
+					<label for="loggin-email-input">Email address</label>
+					<input id="loggin-email-input" type="email" name="email" class="form-control form-control-sm" placeholder="Email" aria-describedby="emailHelp"/>
+				</div>
+				<div class="form-group">
+					<label for="loggin-password-input">Password</label>
+					<input id="loggin-password-input" type="password" class="form-control form-control-sm" name="password" placeholder="Password" />
+				</div>
+        <div class="form-group">
+					<label for="loggin-confirm-password-input">Confirm password</label>
+					<input id="loggin-confirm-password-input" type="password" class="form-control form-control-sm" name="confirm_password" placeholder="Confirm password" />
+				</div>
+				<button type="submit" class="btn btn-block assonance-submit-btn">Sign Up</button>
+			</form>
+		</div>
+	</div>
+</figure>
 
 {% endblock %}

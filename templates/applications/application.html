@@ -2,14 +2,14 @@
 
 {% block content %}
 
-<section class="application-section">
-    <h5 class="card-title">From {{application.user_name}} in response to "{{application.notification_title}}"</h5>
-    <p class="card-text">{{application.message}}</p>
-    <a href="mailto:{{application.user_email}}" class="btn btn-primary">Write on email</a>
-    <form action="/delete-application" method="POST">
-        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-        <input type="hidden" name="application_id" value="{{ application.id }}">
-        <button type="submit" class="btn btn-danger">Delete</a>
-    </form>
-</section>
+    <section class="application-section">
+        <h5 class="card-title">From {{application.user_name}} in response to "{{application.notification_title}}"</h5>
+        <p class="card-text">{{application.message}}</p>
+        <a href="mailto:{{application.user_email}}" class="btn btn-primary">Write on email</a>
+        <form action="/delete-application" method="POST">
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+            <input type="hidden" name="application_id" value="{{ application.id }}">
+            <button type="submit" class="btn btn-danger">Delete</a>
+        </form>
+    </section>
 {% endblock %}

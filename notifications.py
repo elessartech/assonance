@@ -105,6 +105,7 @@ def delete_notification(id):
     db.session.commit()
     return True
 
+
 def update_notification(id, title, description):
     query = f"UPDATE notifications SET title='{title}', description='{description}' WHERE id={id};"
     db.session.execute(query)
