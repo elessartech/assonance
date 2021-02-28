@@ -47,8 +47,12 @@
                         </td>
                         {% if session["admin"] %}
                             <td class="notification-operations">
-                                <a href="/edit-notification/{{ notification.id }}">Edit</a>
-                                <a href="/delete-notification/{{ notification.id }}">Delete</a>
+                                <a href="/edit-notification/{{ notification.id }}" class="btn btn-warning">Edit</a>
+                                <form action="/delete-notification" method="POST">
+                                    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+                                    <input type="hidden" name="notification_id" value="{{ notification.id }}">
+                                    <button type="submit" class="btn btn-danger">Delete</a>
+                                </form>
                             </td>
                         {% endif %}
                     </tr>

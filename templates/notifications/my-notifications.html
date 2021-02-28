@@ -43,13 +43,24 @@
                                 {{notification.location|capitalize}}
                             </td>
                             <td class="notification-operations">
-                                <a href="/edit-notification/{{ notification.id }}">Edit</a>
+                                <a href="/edit-notification/{{ notification.id }}" class="btn btn-warning">Edit</a>
                                 {% if notification.hidden == 0 %}
-                                    <a href="/hide-notification/{{ notification.id }}">Hide</a>
+                                <form action="/hide-notification" method="POST">
+                                    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+                                    <input type="hidden" name="notification_id" value="{{ notification.id }}">
+                                    <button type="submit" class="btn btn-dark">Hide</a>
                                 {% else %}
-                                    <a href="/unhide-notification/{{ notification.id }}">Unhide</a>
+                                <form action="/unhide-notification" method="POST">
+                                    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+                                    <input type="hidden" name="notification_id" value="{{ notification.id }}">
+                                    <button type="submit" class="btn btn-light">Unhide</button>
                                 {% endif %}
-                                <a href="/delete-notification/{{ notification.id }}">Delete</a>
+                                </form>
+                                <form action="/delete-notification" method="POST">
+                                    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+                                    <input type="hidden" name="notification_id" value="{{ notification.id }}">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
                             </td>
                         </tr>
                 {% endfor %}

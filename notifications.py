@@ -73,7 +73,7 @@ def get_notification_by_notification_id(id):
 
 def save_notification(title, description, publisher_id, created_on):
     query = f"INSERT INTO notifications (title,description,publisher_id,created_on) VALUES ('{title}','{description}','{publisher_id}','{created_on}');"
-    result = db.session.execute(query)
+    db.session.execute(query)
     db.session.commit()
     return True
 
@@ -87,14 +87,14 @@ def save_location(name, notification_id):
 
 def save_instrument(name, notification_id):
     query = f"INSERT INTO instruments (name,notification_id) VALUES ('{name}','{notification_id}');"
-    result = db.session.execute(query)
+    db.session.execute(query)
     db.session.commit()
     return True
 
 
 def save_genre(name, notification_id):
     query = f"INSERT INTO genres (name,notification_id) VALUES ('{name}','{notification_id}');"
-    result = db.session.execute(query)
+    db.session.execute(query)
     db.session.commit()
     return True
 
@@ -105,10 +105,9 @@ def delete_notification(id):
     db.session.commit()
     return True
 
-
 def update_notification(id, title, description):
     query = f"UPDATE notifications SET title='{title}', description='{description}' WHERE id={id};"
-    result = db.session.execute(query)
+    db.session.execute(query)
     db.session.commit()
     return True
 
@@ -117,7 +116,7 @@ def update_location(name, notification_id):
     query = (
         f"UPDATE locations SET name='{name}' WHERE notification_id={notification_id};"
     )
-    result = db.session.execute(query)
+    db.session.execute(query)
     db.session.commit()
     return True
 
@@ -126,27 +125,27 @@ def update_instrument(name, notification_id):
     query = (
         f"UPDATE instruments SET name='{name}' WHERE notification_id={notification_id};"
     )
-    result = db.session.execute(query)
+    db.session.execute(query)
     db.session.commit()
     return True
 
 
 def update_genre(name, notification_id):
     query = f"UPDATE genres SET name='{name}' WHERE notification_id={notification_id};"
-    result = db.session.execute(query)
+    db.session.execute(query)
     db.session.commit()
     return True
 
 
 def hide_notification(id):
     query = f"UPDATE notifications SET hidden='1' WHERE id={id};"
-    result = db.session.execute(query)
+    db.session.execute(query)
     db.session.commit()
     return True
 
 
 def unhide_notification(id):
     query = f"UPDATE notifications SET hidden='0' WHERE id={id};"
-    result = db.session.execute(query)
+    db.session.execute(query)
     db.session.commit()
     return True

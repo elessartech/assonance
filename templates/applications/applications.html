@@ -5,9 +5,21 @@
     {% if not applications %}
         You havent received any applications in response to your notifications.
     {% else %}
-        <figure>
-            {{applications}}
-        </figure>
+        {% for application in applications %}
+            <figure class="card w-50" style="text-align: center; margin: 2em auto;">
+                <div class="card-body">
+                    <h5 class="card-title">From {{application.user_name}} in response to "{{application.notification_title}}"</h5>
+                    <p class="card-text">{{application.message}}</p>
+                    <a href="/application/{{session['user_id']}}/{{application.id}}" class="btn btn-success">Open application</a>
+                    <a href="mailto:{{application.user_email}}" class="btn btn-primary">Write on email</a>
+                    <form action="/delete-application" method="post">
+                        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+                        <input type="hidden" name="application_id" value="{{ application.id }}">
+                        <button type="submit" class="btn btn-danger">Delete</a>
+                    </form>
+                </div>
+            </figure>
+        {% endfor %}
     {% endif %}
 </section>
 {% endblock %}

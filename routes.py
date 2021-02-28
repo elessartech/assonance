@@ -164,11 +164,12 @@ def show_single_notificaiton(notification_id):
         )
 
 
-@app.route("/delete-notification/<notification_id>", methods=["GET"])
-def delete_single_notificaiton(notification_id):
-    if request.method == "GET":
-        if not session["admin"]:
+@app.route("/delete-notification", methods=["POST"])
+def delete_single_notificaiton():
+    if request.method == "POST":
+        if session["csrf_token"] != int(request.form["csrf_token"]):
             abort(403)
+        notification_id = request.form["notification_id"]
         was_notification_deleted = notifications.delete_notification(notification_id)
         if was_notification_deleted:
             return redirect("/notifications")
@@ -239,11 +240,12 @@ def edit_single_notificaiton(notification_id):
             )
 
 
-@app.route("/hide-notification/<notification_id>", methods=["GET"])
-def hide_notification_visibility(notification_id):
-    if request.method == "GET":
-        if not session["user_id"]:
+@app.route("/hide-notification", methods=["POST"])
+def hide_notification_visibility():
+    if request.method == "POST":
+        if session["csrf_token"] != int(request.form["csrf_token"]):
             abort(403)
+        notification_id = request.form["notification_id"]
         was_notification_hidden = notifications.hide_notification(notification_id)
         if was_notification_hidden:
             return redirect("/my-notifications/" + str(session["user_id"]))
@@ -251,11 +253,12 @@ def hide_notification_visibility(notification_id):
             return False
 
 
-@app.route("/unhide-notification/<notification_id>", methods=["GET"])
-def unhide_notification_visibility(notification_id):
-    if request.method == "GET":
-        if not session["user_id"]:
+@app.route("/unhide-notification", methods=["POST"])
+def unhide_notification_visibility():
+    if request.method == "POST":
+        if session["csrf_token"] != int(request.form["csrf_token"]):
             abort(403)
+        notification_id = request.form["notification_id"]
         was_notification_unhidden = notifications.unhide_notification(notification_id)
         if was_notification_unhidden:
             return redirect("/my-notifications/" + str(session["user_id"]))
@@ -268,9 +271,19 @@ def show_applications(user_id):
     if request.method == "GET":
         if session["user_id"] != int(user_id):
             abort(403)
-        received_applications = applications.get_applications_for_publisher(user_id)
+        received_applications = applications.get_applications_by_publisher(user_id)
         return render_template(
             "applications/applications.html", applications=received_applications
+        )
+
+@app.route("/application/<user_id>/<application_id>", methods=["GET"])
+def show_single_application(user_id, application_id):
+    if request.method == "GET":
+        if session["user_id"] != int(user_id):
+            abort(403)
+        received_application = applications.get_application_by_id(application_id)
+        return render_template(
+            "applications/application.html", application=received_application
         )
 
 
@@ -307,3 +320,16 @@ def apply_for_notification(notification_id):
                 error="Something went wrong. Please, try again.",
                 notification=notification_to_apply,
             )
+
+
+@app.route("/delete-application", methods=["POST"])
+def delete_single_application():
+    if request.method == "POST":
+        if session["csrf_token"] != int(request.form["csrf_token"]):
+            abort(403)
+        application_id = request.form["application_id"]
+        was_application_deleted = applications.delete_application(application_id)
+        if was_application_deleted:
+            return redirect("/applications/" + session["user_id"])
+        else:
+            return False
