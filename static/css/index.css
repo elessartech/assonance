@@ -9,6 +9,8 @@
 body {
     background-color: #fff;
     font-family: 'Montserrat', sans-serif;
+    min-height: 100vh;
+    width: 100%;
 }
 
 a, a:hover {
@@ -20,13 +22,13 @@ a, a:hover {
     width: 12em;
     height: 100%;
     position: fixed;
-    background-color: #1E145D;
-    margin-left: 0;
+    background-color: #42295A;
+    transition: 0.5s;
 }
 
-.nav-link:active,
-.nav-link:focus,
-.nav-link:hover {
+.nav-link:not(:first-child):active,
+.nav-link:not(:first-child):focus,
+.nav-link:not(:first-child):hover {
     background-color: #ffffff26;
     cursor: pointer;
 }
@@ -43,13 +45,30 @@ a, a:hover {
 }
   
 main {
-    margin-left: 200px;
+    margin-left: 190px;
+}
+
+.menu-btn-nav {
+    width: 20px;
+}
+
+.home-page-header {
+    background-image: url(../assets/simsons-bg.gif);
+    background-size: cover;
+    background-position :  center 0%; 
+    width: auto;
+    height: 100%;
+    min-height: 100vh;
+}
+
+.logging-form-wrap {
+    border: none;
 }
 
 .logging-form-body {
-    width: 50%;
+    width: 100%;
     margin: auto;
-    margin-top: 2.5%;
+    padding: 10%;
 }
 
 .logging-form > * {
@@ -58,11 +77,25 @@ main {
 
 .assonance-submit-btn {
     color: #fff;
-    background: #1E145D;
-    width: 20%;
+    background: #42295A;
+    width: 6em;
     border: none;
 }
 
 .assonance-submit-btn:hover, .assonance-submit-btn:focus, .assonance-submit-btn:active {
     background: #FD6E16;
+}
+
+.notification-panel {
+    display: flex;
+    flex-direction: column;
+}
+
+.notification-header-btns {
+    place-self: flex-end;
+    margin: 2em;
+}
+
+.notification-name a {
+    color: #FD6E16;
 }
