@@ -339,6 +339,6 @@ def delete_single_application():
         application_id = request.form["application_id"]
         was_application_deleted = applications.delete_application(application_id)
         if was_application_deleted:
-            return redirect("/applications/" + session["user_id"])
+            return redirect("/applications/" + str(session["user_id"]))
         else:
             return False

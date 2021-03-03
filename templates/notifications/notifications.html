@@ -4,8 +4,8 @@
 <section class="notification-panel">
     <span class="notification-header-btns">
         {% if session["musician"] or session["band"] or session["admin"] %}
-            <a href="/new-notification" class=" btn btn-success btn-xs">Create new notification</a>
-            <a href="/my-notifications/{{session['user_id']}}" class=" btn btn-dark btn-xs">My notifications</a>
+            <a href="/new-notification" class="btn assonance-primary-btn">Create new notification</a>
+            <a href="/my-notifications/{{session['user_id']}}" class="btn assonance-secondary-btn">My notifications</a>
         {% else %}
             <span>One needs to be authorized in order to create notifications...</span>
         {% endif %}
@@ -13,13 +13,13 @@
     <table class="table table-hover p-table">
         <thead>
         <tr>
-            <th><a href="/notifications?filter=title">Title</a></th>
-            <th><a href="/notifications?filter=publisher_name">Publisher</a></th>
-            <th><a href="/notifications?filter=instrument">Instruments</a></th>
-            <th><a href="/notifications?filter=genre">Genres</a></th>
-            <th><a href="/notifications?filter=location">Location</a></th>
+            <th id="th-title"><a href="/notifications?filter=title">Title</a></th>
+            <th id="th-publisher"><a href="/notifications?filter=publisher_name">Publisher</a></th>
+            <th id="th-instruments"><a href="/notifications?filter=instrument">Instruments</a></th>
+            <th id="th-genres"><a href="/notifications?filter=genre">Genres</a></th>
+            <th id="th-location"><a href="/notifications?filter=location">Location</a></th>
             {% if session["admin"] %}
-                <th>Operations</th>
+                <th id="th-operations">Operations</th>
             {% endif %}
         </tr>
         </thead>

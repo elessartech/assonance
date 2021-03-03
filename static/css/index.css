@@ -75,15 +75,30 @@ main {
     margin: 1em auto;
 }
 
-.assonance-submit-btn {
+.logging-form button {
+    width: 6em;
+}
+
+.assonance-primary-btn {
     color: #fff;
     background: #42295A;
-    width: 6em;
     border: none;
 }
 
-.assonance-submit-btn:hover, .assonance-submit-btn:focus, .assonance-submit-btn:active {
+.assonance-primary-btn:hover, .assonance-primary-btn:focus, .assonance-primary-btn:active {
     background: #FD6E16;
+    color: #fff;
+}
+
+.assonance-secondary-btn {
+    color: #fff;
+    background: transparent;
+    color: #e7d003;
+    border: 1px solid #e7d003;
+}
+
+.assonance-secondary-btn:hover, .assonance-secondary-btn:focus, .assonance-secondary-btn:active {
+    color: #e7d003;
 }
 
 .notification-panel {
@@ -98,4 +113,12 @@ main {
 
 .notification-name a {
     color: #FD6E16;
+}
+
+.notification-operations {
+    display: flex;
+}
+
+.notification-operations > * {
+    margin: 0 1em;
 }
