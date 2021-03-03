@@ -6,7 +6,7 @@
     <div class="notification-form-body">
         <legend>Edit notification</legend>
         {{error}}
-        <form method="POST" accept-charset="UTF-8" role="form">
+        <form method="POST" accept-charset="UTF-8" role="form" class="notification-form">
             <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
             <div class="form-group">
                 <label for="notification-title-input">Title</label>

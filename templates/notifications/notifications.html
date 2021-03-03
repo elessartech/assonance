@@ -7,7 +7,7 @@
             <a href="/new-notification" class="btn assonance-primary-btn">Create new notification</a>
             <a href="/my-notifications/{{session['user_id']}}" class="btn assonance-secondary-btn">My notifications</a>
         {% else %}
-            <span>One needs to be authorized in order to create notifications...</span>
+            <span class="notification-panel-warning"><i class="bx bx-comment-error"></i> One needs to be authorized in order to create notifications...</span>
         {% endif %}
     </span>
     <table class="table table-hover p-table">

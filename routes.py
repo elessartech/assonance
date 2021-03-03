@@ -191,7 +191,9 @@ def edit_single_notificaiton(notification_id):
         notification_id
     )
     if request.method == "GET":
-        if not session.get("admin"):
+        if not session.get("admin") and not session.get("user_id"):
+            abort(403)
+        if int(session["user_id"]) != int(notification_to_edit.publisher_id):
             abort(403)
         if notification_to_edit:
             return render_template(
@@ -303,7 +305,7 @@ def apply_for_notification(notification_id):
     )
     if request.method == "GET":
         if not session.get("user_id"):
-            abort(403)
+            return redirect("/login")
         if int(session["user_id"]) == int(notification_to_apply.publisher_id):
             abort(403)
         return render_template(
