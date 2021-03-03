@@ -31,6 +31,8 @@ def login(email, password):
 
 
 def logout():
+    if session.get("user_id"):
+        del session["user_id"]
     if session.get("musician"):
         del session["musician"]
     if session.get("band"):

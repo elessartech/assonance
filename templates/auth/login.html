@@ -6,19 +6,17 @@
 	<div class="logging-form-body">
 		<h3 class="text-center">Log In</h3>
 		{{error}}
-		<div>
-			<form class="logging-form" method="POST" accept-charset="UTF-8" role="form">
-				<div class="form-group">
-					<label for="loggin-email-input">Email address</label>
-					<input id="loggin-email-input" type="email" name="email" class="form-control form-control-sm" placeholder="Email" aria-describedby="emailHelp"/>
-				</div>
-				<div class="form-group">
-					<label for="loggin-password-input">Password</label>
-					<input id="loggin-password-input" type="password" class="form-control form-control-sm" name="password" placeholder="Password" />
-				</div>
-				<button type="submit" class="btn btn-block assonance-primary-btn">Log In</button>
-			</form>
-		</div>
+		<form class="logging-form" method="POST" accept-charset="UTF-8" role="form">
+			<div class="form-group">
+				<label for="logging-email-input">Email address</label>
+				<input id="logging-email-input" type="email" name="email" class="form-control form-control-sm" placeholder="Email" aria-describedby="emailHelp"/>
+			</div>
+			<div class="form-group">
+				<label for="logging-password-input">Password</label>
+				<input id="logging-password-input" type="password" class="form-control form-control-sm" name="password" placeholder="Password" />
+			</div>
+			<button type="submit" class="btn btn-block assonance-primary-btn">Log In</button>
+		</form>
 	</div>
 </figure>
 

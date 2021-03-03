@@ -98,7 +98,7 @@ def show_user_notifications(user_id):
 @app.route("/new-notification", methods=["GET", "POST"])
 def new_notification():
     if request.method == "GET":
-        if not session["user_id"]:
+        if not session.get("user_id"):
             abort(403)
         return render_template(
             "notifications/new-notification.html",
@@ -191,7 +191,7 @@ def edit_single_notificaiton(notification_id):
         notification_id
     )
     if request.method == "GET":
-        if not session["admin"]:
+        if not session.get("admin"):
             abort(403)
         if notification_to_edit:
             return render_template(
@@ -302,7 +302,9 @@ def apply_for_notification(notification_id):
         notification_id
     )
     if request.method == "GET":
-        if not session["user_id"]:
+        if not session.get("user_id"):
+            abort(403)
+        if int(session["user_id"]) == int(notification_to_apply.publisher_id):
             abort(403)
         return render_template(
             "applications/apply-form.html", notification=notification_to_apply

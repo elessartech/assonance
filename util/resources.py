@@ -1,14 +1,10 @@
-import geonamescache
+from countrygroups import EUROPEAN_UNION
 
 
 def get_locations():
-    gc = geonamescache.GeonamesCache()
-    locations = list(gc.get_countries().values())
-    converted_locations = []
-    for country in locations:
-        converted_locations.append((country["name"].lower(), country["name"]))
+    locations = EUROPEAN_UNION.names
 
-    return converted_locations
+    return [(location.lower(), location) for location in locations]
 
 
 def get_genres():
@@ -140,11 +136,8 @@ def get_genres():
         "Euro-House",
         "Dance Hall",
     ]
-    converted_genres = []
-    for genre in genres:
-        converted_genres.append((genre.lower(), genre))
 
-    return converted_genres
+    return [(genre.lower(), genre) for genre in genres]
 
 
 def get_instruments():
@@ -205,7 +198,5 @@ def get_instruments():
         "xylophone",
         "zither",
     ]
-    converted_instruments = []
-    for instrument in instruments:
-        converted_instruments.append((instrument.lower(), instrument.capitalize()))
-    return converted_instruments
+
+    return [(instrument.lower(), instrument.capitalize()) for instrument in instruments]

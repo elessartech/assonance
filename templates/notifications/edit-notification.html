@@ -2,42 +2,61 @@
 
 {% block content %}
 
-<div style="width: 80%">
-    <legend>Edit notification</legend>
-    {{error}}
-    <form method="POST" accept-charset="UTF-8" role="form">
-        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-        <div class="form-group">
-            <input type="text" name="title" placeholder="Title" />
-        </div>
-        <div class="form-group">
-            <input type="text" name="description" placeholder="Describe your notification"/>
-        </div>
-        <input type="hidden" name="publisher_id" value="{{session['user_id']}}"/>
-        <div class="form-group">
-            <select name="instrument" placeholder="Select the instrument you play">
-                {% for instrument in instruments %}
-                    <option value="{{instrument[0]}}">{{instrument[1]}}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="form-group">
-            <select name="genre" placeholder="Select the genre you are playing in">
-                {% for genre in genres %}
-                    <option value="{{genre[0]}}">{{genre[1]}}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="form-group">
-            <select name="location" placeholder="Select the country you are situated at">
-                {% for location in locations %}
-                    <option value="{{location[0]}}">{{location[1]}}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <a href="/notifications" class="btn btn-dark btn-xs">Cancel</a>
-        <button type="submit" class="btn btn-success btn-xs" name="submit">Edit</button>
-    </form>  
-</div>
+<figure class="notification-form-wrap">
+    <div class="notification-form-body">
+        <legend>Edit notification</legend>
+        {{error}}
+        <form method="POST" accept-charset="UTF-8" role="form">
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+            <div class="form-group">
+                <label for="notification-title-input">Title</label>
+                <input class="form-control form-control-sm" id="notification-title-input" type="text" value="{{notification.title}}" name="title" placeholder="Title" />
+            </div>
+            <div class="form-group">
+                <label for="notification-description-input">Description</label>
+                <textarea class="form-control form-control-sm" id="notification-description-input" type="text" value="{{notification.description}}" name="description" placeholder="Describe your notification">{{notification.description}}</textarea>
+            </div>
+            <input type="hidden" name="publisher_id" value="{{session['user_id']}}"/>
+            <div class="form-group">
+                <label for="notification-instrument-input">Instrument</label>
+                <select class="form-control form-control-sm" id="notification-instrument-input" name="instrument" placeholder="Select the instrument you play">
+                    {% for instrument in instruments %}
+                        {% if instrument[0] == notification.instrument %}
+                            <option  selected value="{{instrument[0]}}">{{instrument[1]}}</option>
+                        {% else %}
+                            <option value="{{instrument[0]}}">{{instrument[1]}}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="notification-genre-input">Genre</label>
+                <select class="form-control form-control-sm" id="notification-genre-input" name="genre" placeholder="Select the genre you are playing in">
+                    {% for genre in genres %}
+                        {% if genre[0] == notification.genre %}
+                            <option  selected value="{{genre[0]}}">{{genre[1]}}</option>
+                        {% else %}
+                            <option value="{{genre[0]}}">{{genre[1]}}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="notification-location-select">Location</label>
+                <select class="form-control form-control-sm" id="notification-location-select" name="location" placeholder="Select the country you are situated at">
+                    {% for location in locations %}
+                        {% if location[0] == notification.location %}
+                            <option  selected value="{{location[0]}}">{{location[1]}}</option>
+                        {% else %}
+                            <option value="{{location[0]}}">{{location[1]}}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <a href="/notifications" class="btn btn-dark btn-xs">Cancel</a>
+            <button type="submit" class="btn assonance-success-btn" name="submit">Edit</button>
+        </form>
+    </div>  
+</figure>
 
 {% endblock %}

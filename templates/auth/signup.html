@@ -6,31 +6,29 @@
 	<div class="logging-form-body">
 		<h3 class="text-center">Sign Up</h3>
 		{{error}}
-		<div>
-		  	<form class="logging-form" method="POST" accept-charset="UTF-8" role="form">
-				<select class="custom-select" name="role">
-				<option value="musician">Musician</option>
-				<option value="band">Band</option>
-				</select>
-				<div class="form-group">
-					<label for="loggin-name-input">Name</label>
-					<input id="loggin-name-input" type="text" class="form-control form-control-sm" name="name" placeholder="Name" />
-				</div>
-				<div class="form-group">
-					<label for="loggin-email-input">Email address</label>
-					<input id="loggin-email-input" type="email" name="email" class="form-control form-control-sm" placeholder="Email" aria-describedby="emailHelp"/>
-				</div>
-				<div class="form-group">
-					<label for="loggin-password-input">Password</label>
-					<input id="loggin-password-input" type="password" class="form-control form-control-sm" name="password" placeholder="Password" />
-				</div>
-				<div class="form-group">
-					<label for="loggin-confirm-password-input">Confirm password</label>
-					<input id="loggin-confirm-password-input" type="password" class="form-control form-control-sm" name="confirm_password" placeholder="Confirm password" />
-				</div>
-				<button type="submit" class="btn btn-block assonance-primary-btn">Sign Up</button>
-			</form>
-		</div>
+		<form class="logging-form" method="POST" accept-charset="UTF-8" role="form">
+			<select class="custom-select" name="role">
+			<option value="musician">Musician</option>
+			<option value="band">Band</option>
+			</select>
+			<div class="form-group">
+				<label for="logging-name-input">Name</label>
+				<input id="logging-name-input" type="text" class="form-control form-control-sm" name="name" placeholder="Name" />
+			</div>
+			<div class="form-group">
+				<label for="logging-email-input">Email address</label>
+				<input id="logging-email-input" type="email" name="email" class="form-control form-control-sm" placeholder="Email" aria-describedby="emailHelp"/>
+			</div>
+			<div class="form-group">
+				<label for="logging-password-input">Password</label>
+				<input id="logging-password-input" type="password" class="form-control form-control-sm" name="password" placeholder="Password" />
+			</div>
+			<div class="form-group">
+				<label for="logging-confirm-password-input">Confirm password</label>
+				<input id="logging-confirm-password-input" type="password" class="form-control form-control-sm" name="confirm_password" placeholder="Confirm password" />
+			</div>
+			<button type="submit" class="btn btn-block assonance-primary-btn">Sign Up</button>
+		</form>
 	</div>
 </figure>
 
