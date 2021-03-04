@@ -13,7 +13,7 @@
 </head>
 <body>
   
-  <aside class="side-navbar nav-pos d-flex justify-content-between flex-wrap flex-column" id="sidebar">
+  <aside class="side-navbar nav-pos" id="sidebar">
     <ul class="nav flex-column text-white w-100">
       <a href="/" class="nav-link h3 text-white">
         <i class="bx bx-music"></i> Assonance
@@ -46,7 +46,8 @@
       © 2021 Maksim Ilmast
     </a>
   </aside>
-  <main>
+  <button id="menu-btn" class="btn menu-btn"><i class="bx bx-menu"></i></button>
+  <main id="main-container" class="main-container">
     {% block content %}
 
     {% endblock %}

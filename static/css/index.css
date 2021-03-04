@@ -19,11 +19,16 @@ a, a:hover {
 }
 
 .side-navbar {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    flex-direction: column;
     width: 12em;
     height: 100%;
     position: fixed;
     background-color: #42295A;
-    transition: 0.5s;
+    transition: opacity .5s ease-out;
+    opacity: 1;
 }
 
 .nav-link:not(:first-child):active,
@@ -45,8 +50,9 @@ a, a:hover {
     color: #FD6E16 !important;
 }
   
-main {
+.main-container {
     margin-left: 190px;
+    transition: 0.5s;
 }
 
 .menu-btn-nav {
@@ -128,7 +134,6 @@ main {
 }
 
 .notification-panel-warning {
-    border: 1px solid #e7d003;
     color: #e7d003;
     background: transparent;
     padding: 10px;
@@ -153,4 +158,49 @@ main {
 
 .notification-operations > *:first-child {
     margin-left: 0;
+}
+
+
+.home-page-wrapper {
+	width: 80%;
+	max-width: 1280px;
+	margin-left: auto;
+	margin-right: auto;
+    padding: 5%;
+}
+
+.home-page-wrapper article h2 {
+    text-align: center;
+}
+
+.describing-gif {
+    background-image: url(../assets/simsons-bg.gif);
+    width: auto;
+    height: 280px;
+    max-width: 500px;
+    margin-left: auto;
+	margin-right: auto;
+    margin-bottom: 1em;
+}
+
+.menu-btn {
+    position: relative;
+    top: 1em;
+    left: 12.5em;
+    background-color: #FD6E16;
+    color: #fff;
+    transition: 0.5s;
+}
+
+.menu-btn-active {
+    left: .5em;
+}
+
+.side-navbar-active {
+    opacity: 0;
+    margin-left: -300px;
+}
+
+.main-container-active {
+    margin-left: 0px;
 }
