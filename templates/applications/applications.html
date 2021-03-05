@@ -6,17 +6,20 @@
         You havent received any applications in response to your notifications.
     {% else %}
         {% for application in applications %}
-            <figure class="card w-50" style="text-align: center; margin: 2em auto;">
-                <div class="card-body">
-                    <h5 class="card-title">From {{application.user_name}} in response to "{{application.notification_title}}"</h5>
-                    <p class="card-text">{{application.message}}</p>
-                    <a href="/application/{{session['user_id']}}/{{application.id}}" class="btn btn-success">Open application</a>
-                    <a href="mailto:{{application.user_email}}" class="btn btn-primary">Write on email</a>
-                    <form action="/delete-application" method="post">
-                        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
-                        <input type="hidden" name="application_id" value="{{ application.id }}">
-                        <button type="submit" class="btn btn-danger">Delete</a>
-                    </form>
+            <figure class="card application-card">
+                <div class="card-body application-card-body">
+                    <h3 class="application-card-title">From <strong>{{application.user_name}}</strong> in response to "<em>{{application.notification_title}}</em>"</h3>
+                    <small class="application-card-posted-on">Posted on {{application.created_on}}</small>
+                    <p class="application-card-message">{{application.message}}</p>
+                    <div class="application-card-btns">
+                        <a href="/application/{{session['user_id']}}/{{application.id}}" class="btn assonance-success-btn">Open application</a>
+                        <a href="mailto:{{application.user_email}}" class="btn assonance-primary-btn">Write on email</a>
+                        <form action="/delete-application" method="post">
+                            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+                            <input type="hidden" name="application_id" value="{{ application.id }}">
+                            <button type="submit" class="btn assonance-delete-btn">Delete</a>
+                        </form>
+                    </div>
                 </div>
             </figure>
         {% endfor %}

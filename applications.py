@@ -3,7 +3,7 @@ from db import db
 
 def get_applications_by_publisher(publisher_id):
     result = db.session.execute(
-        f"SELECT a.id, a.message, a.created_on, n.title as notification_title, u.name as user_name, u.email as user_email "
+        f"SELECT a.id, a.message, substr(a.created_on, 0, 11) as created_on, n.title as notification_title, u.name as user_name, u.email as user_email "
         f"FROM applications a LEFT JOIN notifications n ON n.id = a.notification_id "
         f"LEFT JOIN users u ON u.id = a.sender_id "
         f"WHERE n.publisher_id={publisher_id} AND n.hidden=0;"
@@ -13,7 +13,7 @@ def get_applications_by_publisher(publisher_id):
 
 def get_application_by_id(id):
     result = db.session.execute(
-        f"SELECT a.id, a.message, a.created_on, n.title as notification_title, u.name as user_name, u.email as user_email "
+        f"SELECT a.id, a.message, substr(a.created_on, 0, 11) as created_on, n.title as notification_title, u.name as user_name, u.email as user_email "
         f"FROM applications a LEFT JOIN notifications n ON n.id = a.notification_id "
         f"LEFT JOIN users u ON u.id = a.sender_id "
         f"WHERE a.id={id} AND n.hidden=0;"

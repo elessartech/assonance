@@ -18,6 +18,7 @@
             <th id="th-instruments"><a href="/notifications?filter=instrument">Instruments</a></th>
             <th id="th-genres"><a href="/notifications?filter=genre">Genres</a></th>
             <th id="th-location"><a href="/notifications?filter=location">Location</a></th>
+            <th id="th-date"><a href="/notifications?filter=created_on">Date</a></th>
             {% if session["admin"] %}
                 <th id="th-operations">Operations</th>
             {% endif %}
@@ -45,13 +46,16 @@
                         <td class="notification-location">
                             {{notification.location|capitalize}}
                         </td>
+                        <td class="notification-location">
+                            {{notification.created_on}}
+                        </td>
                         {% if session["admin"] %}
                             <td class="notification-operations">
-                                <a href="/edit-notification/{{ notification.id }}" class="btn btn-warning">Edit</a>
+                                <a href="/edit-notification/{{ notification.id }}" class="btn assonance-edit-btn">Edit</a>
                                 <form action="/delete-notification" method="POST">
                                     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
                                     <input type="hidden" name="notification_id" value="{{ notification.id }}">
-                                    <button type="submit" class="btn btn-danger">Delete</a>
+                                    <button type="submit" class="btn assonance-delete-btn">Delete</a>
                                 </form>
                             </td>
                         {% endif %}

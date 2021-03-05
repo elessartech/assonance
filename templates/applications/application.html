@@ -1,15 +1,14 @@
 {% extends "layout.html" %}
 
 {% block content %}
-
     <section class="application-section">
-        <h5 class="card-title">From {{application.user_name}} in response to "{{application.notification_title}}"</h5>
+        <h5 class="card-title">From <strong>{{application.user_name}}</strong> in response to "<em>{{application.notification_title}}</em>"</h5>
         <p class="card-text">{{application.message}}</p>
-        <a href="mailto:{{application.user_email}}" class="btn btn-primary">Write on email</a>
+        <a href="mailto:{{application.user_email}}" class="btn assonance-success-btn">Write on email</a>
         <form action="/delete-application" method="POST">
             <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
             <input type="hidden" name="application_id" value="{{ application.id }}">
-            <button type="submit" class="btn btn-danger">Delete</a>
+            <button type="submit" class="btn assonance-delete-btn">Delete</a>
         </form>
     </section>
 {% endblock %}

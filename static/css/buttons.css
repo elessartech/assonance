@@ -1,0 +1,82 @@
+.assonance-primary-btn {
+    color: #fff;
+    background: #42295A;
+    border: none;
+    text-align: center;
+}
+
+.assonance-primary-btn:hover, .assonance-primary-btn:focus, .assonance-primary-btn:active {
+    background: #bc3100;
+    color: #fff;
+}
+
+.assonance-secondary-btn {
+    background: transparent;
+    color: #7a0d38;
+    border: 1px solid #7a0d38;
+    text-align: center;
+}
+
+.assonance-secondary-btn:hover, .assonance-secondary-btn:focus, .assonance-secondary-btn:active {
+    color: #7a0d38;
+}
+
+.assonance-delete-btn {
+    color: #fff;
+    background: #7a0d38;
+    border: none;
+    text-align: center;
+}
+
+.assonance-delete-btn:hover, .assonance-delete-btn:focus, .assonance-delete-btn:active {
+    background: transparent;
+    color: #7a0d38;
+}
+
+.assonance-success-btn {
+    color: #fff;
+    background: #00514f;
+    border: none;
+    text-align: center;
+}
+
+.assonance-success-btn:hover, .assonance-success-btn:focus, .assonance-success-btn:active {
+    background: transparent;
+    color: #00514f;
+}
+
+.assonance-edit-btn {
+    color: #fff;
+    background: #E7D104;
+    border: none;
+    text-align: center;
+}
+
+.assonance-edit-btn:hover, .assonance-edit-btn:focus, .assonance-edit-btn:active {
+    background: transparent;
+    color: #E7D104; /*020304*/
+}
+
+.assonance-hide-btn {
+    color: #fff;
+    background: #020304;
+    border: none;
+    text-align: center;
+}
+
+.assonance-hide-btn:hover, .assonance-hide-btn:focus, .assonance-hide-btn:active {
+    background: transparent;
+    color: #020304; /*020304*/
+}
+
+.assonance-unhide-btn {
+    color: #020304;
+    background: #fff;
+    border: none;
+    text-align: center;
+}
+
+.assonance-unhide-btn:hover, .assonance-unhide-btn:focus, .assonance-unhide-btn:active {
+    background: transparent;
+    color: #fff; /*020304*/
+}

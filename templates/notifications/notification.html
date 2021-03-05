@@ -4,7 +4,7 @@
 
 <section class="notification-section">
     <h2>{{notification.title}}</h2>
-    <small>Posted by {{notification.publisher_name}}</small>
+    <small>Posted by {{notification.publisher_name}} on {{notification.created_on}}</small>
 
     <p>{{notification.description}}</p>
 
@@ -12,9 +12,9 @@
     <p>Instruments: {{notification.instrument}}</p>
     <p>Location: {{notification.location|capitalize}}</p>
     {% if session["user_id"] == notification.publisher_id|int %}
-        <a class=" btn btn-dark btn-xs disabled">Apply</a>
+        <a class="btn assonance-success-btn disabled">Apply</a>
     {% else %}
-        <a href="/apply/{{notification.id}}" class=" btn btn-dark btn-xs">Apply</a>
+        <a href="/apply/{{notification.id}}" class=" btn assonance-success-btn">Apply</a>
     {% endif %}
 </section>
 {% endblock %}

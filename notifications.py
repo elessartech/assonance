@@ -20,20 +20,21 @@ def get_notification_visibility(id):
 
 def get_all_notifications():
     result = db.session.execute(
-        f"SELECT n.id, n.hidden, n.created_on, n.title, n.description, u.name as publisher_name, u.role as publisher_role, g.name as genre, i.name as instrument, l.name as location, n.created_on as created_on "
+        f"SELECT n.id, n.hidden, n.created_on, n.title, n.description, u.name as publisher_name, u.role as publisher_role, g.name as genre, i.name as instrument, l.name as location, substr(n.created_on, 0, 11) as created_on "
         f"FROM notifications n "
         f"LEFT JOIN users u ON u.id = n.publisher_id "
         f"LEFT JOIN genres g ON g.notification_id = n.id "
         f"LEFT JOIN instruments i ON i.notification_id = n.id "
         f"LEFT JOIN locations l ON l.notification_id = n.id "
-        f"WHERE n.hidden=0;"
+        f"WHERE n.hidden=0"
+        f"ORDER BY n.created_on DESC"
     )
     return result.fetchall()
 
 
 def get_all_notifications_grouped_by_filter(filter):
     result = db.session.execute(
-        f"SELECT n.id, n.title as title, n.description, u.name as publisher_name, u.role as publisher_role, g.name as genre, i.name as instrument, l.name as location, n.created_on as created_on "
+        f"SELECT n.id, n.title as title, n.description, u.name as publisher_name, u.role as publisher_role, g.name as genre, i.name as instrument, l.name as location, substr(n.created_on, 0, 11) as created_on "
         f"FROM notifications n "
         f"LEFT JOIN users u ON u.id = n.publisher_id "
         f"LEFT JOIN genres g ON g.notification_id = n.id "
@@ -48,7 +49,7 @@ def get_all_notifications_grouped_by_filter(filter):
 def get_notifications_by_user_id(id):
     result = db.session.execute(
         f"SELECT n.id, n.title, n.description, u.name as publisher_name, u.role as publisher_role, g.name as genre, i.name as instrument, "
-        f"l.name as location, n.hidden as hidden, n.created_on as created_on FROM notifications n "
+        f"l.name as location, n.hidden as hidden, substr(n.created_on, 0, 11) as created_on FROM notifications n "
         f"LEFT JOIN users u ON u.id = n.publisher_id "
         f"LEFT JOIN genres g ON g.notification_id = n.id "
         f"LEFT JOIN instruments i ON i.notification_id = n.id "
@@ -61,7 +62,7 @@ def get_notifications_by_user_id(id):
 def get_notification_by_notification_id(id):
     result = db.session.execute(
         f"SELECT n.id, n.title, n.description, n.publisher_id, u.name as publisher_name, u.role as publisher_role, g.name as genre, i.name as instrument, "
-        f"l.name as location FROM notifications n "
+        f"l.name as location, substr(n.created_on, 0, 11) as created_on FROM notifications n "
         f"LEFT JOIN users u ON u.id = n.publisher_id "
         f"LEFT JOIN genres g ON g.notification_id = n.id "
         f"LEFT JOIN instruments i ON i.notification_id = n.id "

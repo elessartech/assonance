@@ -17,6 +17,7 @@
                 <th id="th-instruments">Instruments</th>
                 <th id="th-genres">Genres</th>
                 <th id="th-location">Location</th>
+                <th id="th-date">Date</th>
                 <th id="th-operations">Operations</th>
             </tr>
             </thead>
@@ -42,24 +43,27 @@
                             <td class="notification-location">
                                 {{notification.location|capitalize}}
                             </td>
+                            <td class="notification-date">
+                                {{notification.created_on}}
+                            </td>
                             <td class="notification-operations">
-                                <a href="/edit-notification/{{ notification.id }}" class="btn btn-warning">Edit</a>
+                                <a href="/edit-notification/{{ notification.id }}" class="btn assonance-edit-btn">Edit</a>
                                 {% if notification.hidden == 0 %}
                                 <form action="/hide-notification" method="POST">
                                     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
                                     <input type="hidden" name="notification_id" value="{{ notification.id }}">
-                                    <button type="submit" class="btn btn-dark">Hide</a>
+                                    <button type="submit" class="btn assonance-hide-btn">Hide</a>
                                 {% else %}
                                 <form action="/unhide-notification" method="POST">
                                     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
                                     <input type="hidden" name="notification_id" value="{{ notification.id }}">
-                                    <button type="submit" class="btn btn-light">Unhide</button>
+                                    <button type="submit" class="btn assonance-unhide-btn">Unhide</button>
                                 {% endif %}
                                 </form>
                                 <form action="/delete-notification" method="POST">
                                     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
                                     <input type="hidden" name="notification_id" value="{{ notification.id }}">
-                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                    <button type="submit" class="btn assonance-delete-btn">Delete</button>
                                 </form>
                             </td>
                         </tr>
