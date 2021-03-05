@@ -1,6 +1,6 @@
 # Assonance
 
-Tämä on tsoha-harjoitustyökurssissa kehitetty web-sovellus. 
+Tämä on Helsingin yliopiston tsoha-harjoitustyökurssissa kehitetty web-sovellus. 
 
 ## Sovelluksen tarkoitus
 
