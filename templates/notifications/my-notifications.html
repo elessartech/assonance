@@ -2,12 +2,21 @@
 
 {% block content %}
 <section class="notification-panel">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}    
+            <div class="success-alert-wrap" id="success-alert">
+                <div class="success-alert hvr-wobble-skew">{{messages[0]}}</div>
+            </div>
+        {% endif %}
+    {% endwith %}
     <span class="notification-header-btns">
         <a href="/new-notification" class="btn assonance-primary-btn">Create new notification</a>
-        <a href="/notifications" class=" btn assonance-secondary-btn">All notifications</a>
+        <a href="/notifications" class=" btn assonance-secondary-btn">Show all notifications</a>
     </span>
     {% if not notifications %}
-        You have not created any notifications so far.
+        <div class="no-content-div error-alert">
+            <i class="bx bx-comment-error"></i> You have not created any notifications so far.
+        </div>
     {% else %}
         <table class="table table-hover p-table">
             <thead>

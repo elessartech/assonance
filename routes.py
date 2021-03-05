@@ -1,8 +1,8 @@
 from app import app
-from flask import render_template, request, redirect, session, abort
+from flask import render_template, request, redirect, flash, session, abort
 import notifications, users, applications
 from util.resources import get_locations, get_instruments, get_genres
-from util.security import get_timestamp
+from util.security import get_timestamp, validate_password, validate_name
 
 locations = get_locations()
 genres = get_genres()
@@ -31,9 +31,10 @@ def login():
                 "auth/login.html", error="Please, fill all the inputs."
             )
         if users.login(email, password):
+            flash("You are logged in")
             return redirect("/notifications")
         else:
-            return render_template("auth/login.html", error="Wrong email or password")
+            return render_template("auth/login.html", error="Wrong email or password.")
 
 
 @app.route("/logout", methods=["GET", "POST"])
@@ -56,13 +57,17 @@ def signup():
             return render_template(
                 "auth/signup.html", error="Please, fill all the inputs."
             )
+        if not validate_name(name):
+            return render_template("auth/signup.html", error="Name should be at least 3 characters long.")
         if password != confirm_password:
-            return render_template("auth/signup.html", error="Passwords do not match")
+            return render_template("auth/signup.html", error="Passwords do not match.")
+        if not validate_password(password):
+            return render_template("auth/signup.html", error="Password should contain at least 8 characters, at least 1 letter and 1 number.")
         if users.signup(name, email, role, password):
             return redirect("/login")
         else:
             return render_template(
-                "auth/signup.html", error="Registration did not succeed"
+                "auth/signup.html", error="Registration did not succeed."
             )
 
 
@@ -107,7 +112,7 @@ def new_notification():
             instruments=instruments,
         )
     if request.method == "POST":
-        if int(session["csrf_token"]) != int(request.form["csrf_token"]):
+        if session["csrf_token"] != int(request.form["csrf_token"]):
             abort(403)
         title = request.form["title"]
         description = request.form["description"]
@@ -125,7 +130,7 @@ def new_notification():
         ):
             return render_template(
                 "notifications/new-notification.html",
-                error="Please, provide all the required information",
+                error="Please, provide all the required information.",
                 locations=locations,
                 genres=genres,
                 instruments=instruments,
@@ -141,11 +146,12 @@ def new_notification():
                 instrument, last_notification_id
             )
             if saved_location and saved_genre and saved_instrument:
+                flash("Your notification was created")
                 return redirect("/notifications")
             else:
                 return render_template(
                     "notifications/new-notification.html",
-                    error="Could not create new notification",
+                    error="Could not create new notification.",
                     locations=locations,
                     genres=genres,
                     instruments=instruments,
@@ -153,7 +159,7 @@ def new_notification():
         else:
             return render_template(
                 "notifications/new-notification.html",
-                error="Could not create new notification",
+                error="Could not create new notification.",
                 locations=locations,
                 genres=genres,
                 instruments=instruments,
@@ -180,6 +186,7 @@ def delete_single_notificaiton():
         notification_id = request.form["notification_id"]
         was_notification_deleted = notifications.delete_notification(notification_id)
         if was_notification_deleted:
+            flash("Notification was successfully deleted")
             return redirect("/notifications")
         else:
             return False
@@ -206,7 +213,7 @@ def edit_single_notificaiton(notification_id):
         else:
             return False
     if request.method == "POST":
-        if int(session["csrf_token"]) != int(request.form["csrf_token"]):
+        if session["csrf_token"] != int(request.form["csrf_token"]):
             abort(403)
         title = request.form["title"]
         description = request.form["description"]
@@ -216,7 +223,7 @@ def edit_single_notificaiton(notification_id):
         if not title or not description or not location or not genre or not instrument:
             return render_template(
                 "notifications/new-notification.html",
-                error="Could not update the notification",
+                error="Could not update the notification.",
                 notification=notification_to_edit,
                 locations=locations,
                 genres=genres,
@@ -229,11 +236,12 @@ def edit_single_notificaiton(notification_id):
                 instrument, notification_id
             )
             if updated_location and updated_genre and updated_instrument:
+                flash("Notification was successfully edited")
                 return redirect("/notifications")
             else:
                 return render_template(
                     "notifications/new-notification.html",
-                    error="Could not update the notification",
+                    error="Could not update the notification.",
                     notification=notification_to_edit,
                     locations=locations,
                     genres=genres,
@@ -242,7 +250,7 @@ def edit_single_notificaiton(notification_id):
         else:
             return render_template(
                 "notifications/new-notification.html",
-                error="Could not update the notification",
+                error="Could not update the notification.",
                 notification=notification_to_edit,
                 locations=locations,
                 genres=genres,
@@ -258,6 +266,7 @@ def hide_notification_visibility():
         notification_id = request.form["notification_id"]
         was_notification_hidden = notifications.hide_notification(notification_id)
         if was_notification_hidden:
+            flash("Notification was successfully hidden")
             return redirect("/my-notifications/" + str(session["user_id"]))
         else:
             return False
@@ -271,6 +280,7 @@ def unhide_notification_visibility():
         notification_id = request.form["notification_id"]
         was_notification_unhidden = notifications.unhide_notification(notification_id)
         if was_notification_unhidden:
+            flash("Notification was successfully unhidden")
             return redirect("/my-notifications/" + str(session["user_id"]))
         else:
             return False
@@ -312,7 +322,7 @@ def apply_for_notification(notification_id):
             "applications/apply-form.html", notification=notification_to_apply
         )
     if request.method == "POST":
-        if int(session["csrf_token"]) != int(request.form["csrf_token"]):
+        if session["csrf_token"] != int(request.form["csrf_token"]):
             abort(403)
         message = request.form["message"]
         if not message:
@@ -326,6 +336,7 @@ def apply_for_notification(notification_id):
         if applications.save_application(
             message, sender_id, notification_id, created_on
         ):
+            flash("Your application was sent")
             return redirect("/notifications")
         else:
             return render_template(
@@ -343,6 +354,7 @@ def delete_single_application():
         application_id = request.form["application_id"]
         was_application_deleted = applications.delete_application(application_id)
         if was_application_deleted:
+            flash("Application was successfully deleted")
             return redirect("/applications/" + str(session["user_id"]))
         else:
             return False

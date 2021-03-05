@@ -2,8 +2,17 @@
 
 {% block content %}
 <section class="application-panel">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}    
+            <div class="success-alert-wrap" id="success-alert">
+                <div class="success-alert hvr-wobble-skew">{{messages[0]}}</div>
+            </div>
+        {% endif %}
+    {% endwith %}
     {% if not applications %}
-        You havent received any applications in response to your notifications.
+        <div class="no-content-div error-alert">
+            <i class="bx bx-comment-error"></i> You haven´t received any applications in response to your notifications so far.
+        </div>
     {% else %}
         {% for application in applications %}
             <figure class="card application-card">

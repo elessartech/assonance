@@ -8,12 +8,12 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/boxicons@2.0.5/css/boxicons.min.css" rel="stylesheet" />
+    <link href="{{url_for('static', filename='css/hover.css')}}" rel="stylesheet">
     <link href="{{url_for('static', filename='css/index.css')}}" rel="stylesheet">
     <link href="{{url_for('static', filename='css/buttons.css')}}" rel="stylesheet">
     <title>Assonance</title>
 </head>
 <body>
-  
   <aside class="side-navbar nav-pos" id="sidebar">
     <ul class="nav flex-column text-white w-100">
       <a href="/" class="nav-link h3 text-white">
@@ -23,7 +23,7 @@
         <i class="bx bx-notification"></i>
         <span class="mx-2">Notifications</span>
       </li>
-      {% if session["musician"] or session["band"] or session["admin"] %}
+      {% if session["user_id"] %}
         <a href="/applications/{{session.user_id}}" class="nav-link">
           <i class="bx bx-note"></i>
           <span class="mx-2">Applications</span>

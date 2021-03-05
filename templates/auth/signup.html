@@ -5,7 +5,10 @@
 <figure class="logging-form-wrap">
 	<div class="logging-form-body">
 		<h3 class="text-center">Sign Up</h3>
-		{{error}}
+		{% if error %}
+			<div class="error-alert"><i class="bx bx-comment-error"></i> {{error}}</div>
+		{% else %}
+		{% endif %}
 		<form class="logging-form" method="POST" accept-charset="UTF-8" role="form">
 			<select class="custom-select" name="role">
 			<option value="musician">Musician</option>

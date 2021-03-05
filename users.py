@@ -33,10 +33,6 @@ def login(email, password):
 def logout():
     if session.get("user_id"):
         del session["user_id"]
-    if session.get("musician"):
-        del session["musician"]
-    if session.get("band"):
-        del session["band"]
     if session.get("admin"):
         del session["admin"]
     if session.get("csrf"):

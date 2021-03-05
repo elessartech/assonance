@@ -77,7 +77,7 @@ a, a:hover {
 	max-width: 1280px;
 	margin-left: auto;
 	margin-right: auto;
-    padding: 5%;
+    padding: 2%;
 }
 
 .home-page-wrapper > * {
@@ -121,7 +121,7 @@ a, a:hover {
 .logging-form-body, .notification-form-body, .apply-form-section {
     width: 100%;
     margin: auto;
-    padding: 10%;
+    padding: 5%;
 }
 
 .logging-form > *, .notification-form > *, .apply-form-section > *{
@@ -223,9 +223,34 @@ a, a:hover {
     }
 }
 
-
 @media screen and (max-width: 750px) {
     .application-panel figure {
         width: 100%;
     }
+}
+
+.success-alert-wrap {
+    position: absolute;
+    left: 50%;
+}
+
+.success-alert {
+    border: 1px solid #00514f;
+    background: transparent;
+    color: #00514f;
+    position: relative;
+    border-radius: .25rem;
+    padding: 0.5em;
+    cursor: pointer;
+    left: -50%;
+    transition: .5s ease-out;
+}
+
+.error-alert {
+    color: #7a0d38;
+}
+
+.no-content-div {
+    margin: auto;
+    font-size: 1.5em;
 }

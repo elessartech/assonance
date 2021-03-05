@@ -2,12 +2,19 @@
 
 {% block content %}
 <section class="notification-panel">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}    
+            <div class="success-alert-wrap" id="success-alert">
+                <div class="success-alert hvr-wobble-skew">{{messages[0]}}</div>
+            </div>
+        {% endif %}
+    {% endwith %}
     <span class="notification-header-btns">
-        {% if session["musician"] or session["band"] or session["admin"] %}
+        {% if session["user_id"] %}
             <a href="/new-notification" class="btn assonance-primary-btn">Create new notification</a>
-            <a href="/my-notifications/{{session['user_id']}}" class="btn assonance-secondary-btn">My notifications</a>
+            <a href="/my-notifications/{{session['user_id']}}" class="btn assonance-secondary-btn">Show my notifications</a>
         {% else %}
-            <span class="notification-panel-warning"><i class="bx bx-comment-error"></i> One needs to be authorized in order to create notifications...</span>
+            <span class="error-alert"><i class="bx bx-comment-error"></i> One needs to be authorized in order to create notifications...</span>
         {% endif %}
     </span>
     <table class="table table-hover p-table">

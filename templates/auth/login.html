@@ -1,11 +1,20 @@
 {% extends "layout.html" %}
 
+{% with messages = get_flashed_messages() %}
+	{% if messages %}    
+		<div class="success-alert hvr-wobble-skew">{{messages[0]}}</div>
+	{% endif %}
+{% endwith %}
+
 {% block content %}
 
 <figure class="logging-form-wrap">
 	<div class="logging-form-body">
 		<h3 class="text-center">Log In</h3>
-		{{error}}
+		{% if error %}
+			<div class="error-alert"><i class="bx bx-comment-error"></i> {{error}}</div>
+		{% else %}
+		{% endif %}
 		<form class="logging-form" method="POST" accept-charset="UTF-8" role="form">
 			<div class="form-group">
 				<label for="logging-email-input">Email address</label>
