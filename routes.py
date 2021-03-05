@@ -58,11 +58,16 @@ def signup():
                 "auth/signup.html", error="Please, fill all the inputs."
             )
         if not validate_name(name):
-            return render_template("auth/signup.html", error="Name should be at least 3 characters long.")
+            return render_template(
+                "auth/signup.html", error="Name should be at least 3 characters long."
+            )
         if password != confirm_password:
             return render_template("auth/signup.html", error="Passwords do not match.")
         if not validate_password(password):
-            return render_template("auth/signup.html", error="Password should contain at least 8 characters, at least 1 letter and 1 number.")
+            return render_template(
+                "auth/signup.html",
+                error="Password should contain at least 8 characters, at least 1 letter and 1 number.",
+            )
         if users.signup(name, email, role, password):
             return redirect("/login")
         else:
