@@ -113,6 +113,34 @@ a, a:hover {
     left: .5em;
 }
 
+@media screen and (max-width: 750px) {
+    .side-navbar {
+        opacity: 0;
+        margin-left: -300px;
+    }
+
+    .side-navbar-active {
+        opacity: 1;
+        margin-left: 0px;
+    }
+
+    .main-container {
+        margin-left: 0px;
+    }
+
+    .main-container-active {
+        margin-left: 190px;
+    }
+
+    .menu-btn {
+        left: .5em;
+    }
+
+    .menu-btn-active {
+        left: 12.5em;
+    }
+}
+
 .logging-form-wrap, .notification-form-wrap {
     border: none;
     text-align: center;

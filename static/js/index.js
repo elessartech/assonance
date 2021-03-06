@@ -10,17 +10,19 @@ menuBtn.addEventListener("click", () => {
   mainContainer.classList.toggle("main-container-active");
 });
 
-successAlert.addEventListener("click", () => {
-  successAlert.style.opacity = 0;
+if (successAlert) {
+  successAlert.addEventListener("click", () => {
+    successAlert.style.opacity = 0;
+    setInterval(() => {
+      successAlert.style.display = "none";
+    }, 600)
+  });
+
+  setInterval(() => {
+    successAlert.style.opacity = 0;
+  }, 4000)
+
   setInterval(() => {
     successAlert.style.display = "none";
-  }, 600)
-});
-
-setInterval(() => {
-  successAlert.style.opacity = 0;
-}, 4000)
-
-setInterval(() => {
-  successAlert.style.display = "none";
-}, 5000)
+  }, 5000)
+}
