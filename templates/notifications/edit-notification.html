@@ -5,7 +5,10 @@
 <figure class="notification-form-wrap">
     <div class="notification-form-body">
         <legend>Edit notification</legend>
-        {{error}}
+        {% if error %}
+			<div class="error-alert"><i class="bx bx-comment-error"></i> {{error}}</div>
+		{% else %}
+		{% endif %}
         <form method="POST" accept-charset="UTF-8" role="form" class="notification-form">
             <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
             <div class="form-group">
