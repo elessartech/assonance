@@ -6,7 +6,7 @@ Tämä on Helsingin yliopiston tsoha-harjoitustyökurssissa kehitetty web-sovell
 
 Assonance-sovelluksen tarkoituksena on luoda web-portaali, jonka avulla sekä bändit että muusikot pystyvät löytämään sopivan seuran soittamiseen. 
 
-## Demo
+## Demo (toistaiseksi ei ole saatavilla)
 
 **https://assonance.herokuapp.com/**
 
