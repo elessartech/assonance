@@ -18,7 +18,7 @@ Assonance-sovelluksen tarkoituksena on luoda web-portaali, jonka avulla sekä b�
  ## Sovelluksen asentaminen 
 
 - Asenta ja konfiguroi PostgreSQL. Latausopas sopivalle käyttöjärjestelmälle löytyy [täältä].
-- Kloonaa repon komennolla `git clone https://github.com/IlmastMaksim/assonance.git`
+- Kloonaa repon komennolla `git clone https://github.com/elessartech/assonance.git`
 - Siirty juurihakemistoon
 - Tietokannassa käytetyt taulut löytyvät tiedostosta `schema.sql`. Määrittele niitä PostgreSQL-tulkin tai pgAdminin avulla. [Tässä on hyvät ohjeet]
 - Luo virtuaaliympäristön `python3 -m venv venv`
